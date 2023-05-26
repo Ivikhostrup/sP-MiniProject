@@ -6,11 +6,18 @@
 #define STOCHASTICSIMULATION_REACTION_H
 
 
+#include <list>
+#include "Species.h"
+
 class Reaction {
 public:
-    Reaction();
+    Reaction add_reactant(Species species);
+    Reaction add_product(Species species);
 private:
-    
+    std::list<Species> m_reactants;
+    std::list<Species> m_product;
+    float m_rate_constant;
+    float m_delay;
 };
 
 

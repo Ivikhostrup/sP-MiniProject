@@ -11,13 +11,13 @@
 class Species {
 public:
     Species(std::string name, int initialQuantity):
-        name(std::move(name)), quantity(initialQuantity) {}
+            m_name(std::move(name)), m_quantity(initialQuantity) {}
 
     //std::string getName() { return name; } Maybe necessary later
     //int getQuantity() { return quantity; }
 private:
-    std::string name;
-    int quantity;
+    std::string m_name;
+    int m_quantity;
 };
 
 
