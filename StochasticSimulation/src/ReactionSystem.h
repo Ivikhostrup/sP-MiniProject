@@ -1,0 +1,14 @@
+//
+// Created by Ivik Hostrup on 5/26/2023.
+//
+
+#ifndef STOCHASTICSIMULATION_REACTIONSYSTEM_H
+#define STOCHASTICSIMULATION_REACTIONSYSTEM_H
+
+
+class ReactionSystem {
+
+};
+
+
+#endif //STOCHASTICSIMULATION_REACTIONSYSTEM_H
