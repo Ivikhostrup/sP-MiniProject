@@ -32,10 +32,10 @@ void Reaction::set_delay(float delay) {
     m_delay = delay;
 }
 
-[[nodiscard]] const std::list<std::shared_ptr<Species>>& Reaction::get_reactants() const {
+[[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_reactants() const {
     return m_reactants;
 }
 
-[[nodiscard]] const std::list<std::shared_ptr<Species>>& Reaction::get_products() const {
+[[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_products() const {
     return m_products;
 }
