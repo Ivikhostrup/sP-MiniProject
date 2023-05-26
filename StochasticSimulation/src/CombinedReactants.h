@@ -6,13 +6,16 @@
 #define STOCHASTICSIMULATION_COMBINEDREACTANTS_H
 
 
-#include <list>
+
+#include <vector>
 #include "Species.h"
 
 class CombinedReactants {
 public:
+    void Add(const Species& species);
+    std::vector<Species> GetCombinedSpecies() const;
 private:
-
+    std::vector<Species> m_combined_species;
 };
 
 CombinedReactants operator+(const Species& l, const Species& r) {
