@@ -36,12 +36,12 @@ private:
 Reaction operator>>=(const CombinedReactants& combinedReactants, const Species& species){
     Reaction reaction;
 
-    for(auto reactant : combinedReactants.GetCombinedSpecies()){
+    for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
         reaction.add_reactant(reactant);
     }
 
     reaction.add_product(species);
-    
+
     return reaction;
 }
 
