@@ -6,7 +6,7 @@
 #define STOCHASTICSIMULATION_SIMULATION_H
 
 
-class simulation {
+class Simulation {
 
 };
 

@@ -6,8 +6,11 @@
 #define STOCHASTICSIMULATION_REACTION_H
 
 
-class reaction {
-
+class Reaction {
+public:
+    Reaction();
+private:
+    
 };
 
 
