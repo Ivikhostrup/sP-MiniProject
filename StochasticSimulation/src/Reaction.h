@@ -10,10 +10,11 @@
 #include <memory>
 #include <vector>
 #include "Species.h"
+#include "CombinedReactants.h"
 
 class Reaction {
 public:
-    explicit Reaction(float rate_constant) : m_rate_constant(rate_constant){}
+    //explicit Reaction(float rate_constant) : m_rate_constant(rate_constant){}
 
     Reaction add_reactant(Species species); // Might need to update this
     Reaction add_product(Species species); // Might need to update this
@@ -32,7 +33,17 @@ private:
     float m_delay = 0.0;
 };
 
+Reaction operator>>=(const CombinedReactants& combinedReactants, const Species& species){
+    Reaction reaction;
 
+    for(auto reactant : combinedReactants.GetCombinedSpecies()){
+        reaction.add_reactant(reactant);
+    }
+
+    reaction.add_product(species);
+    
+    return reaction;
+}
 
 
 #endif //STOCHASTICSIMULATION_REACTION_H
