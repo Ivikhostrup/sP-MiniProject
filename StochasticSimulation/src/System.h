@@ -12,28 +12,15 @@
 class System {
 public:
     void Simulate();
-    void AddSpecies(const std::string& name, int initialQuantity);
+    void AddSpecies(const std::shared_ptr<Species>& species);
+    
 
-    friend std::ostream& operator<<(std::ostream& os, const System& simulation);
-
-    System& operator()(const std::string& name, int initialQuantity) {
-        AddSpecies(name, initialQuantity);
-        ;
-    }
-
-
-    /*System operator()(const Reaction& reaction, const) {
-        AddCombinedReactants(reactants);
-        AddProduct(product);
-
-        return *this;
-    }*/
 private:
-    std::vector<Species> m_species;
-    //std::vector<Reaction> m_reactions;
-    float m_delay = 0.0;
+    std::vector<std::shared_ptr<Species>> m_species;
+    size_t m_delay = 0.0;
 };
 
+// Constructor til at tage start state og reactions ind
 
 
 

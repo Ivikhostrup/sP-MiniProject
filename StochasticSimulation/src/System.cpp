@@ -5,19 +5,12 @@
 #include <iostream>
 #include "System.h"
 
-// Ostream operator overload for System class
-std::ostream& operator<<(std::ostream& os, const System& simulation) {
-    for (const auto& reaction : simulation.m_reactions) {
-        os << reaction << std::endl;
-    }
-    return os;
-}
 
 void System::Simulate() {
 
 }
 
-void System::AddSpecies(const std::string& name, int initialQuantity) {
+void System::AddSpecies(const std::shared_ptr<Species>& species) {
     // Add species to vector of species
-    m_species.push_back(Species(name, initialQuantity));
+    m_species.push_back(species);
 }
