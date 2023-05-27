@@ -13,7 +13,9 @@
 class CombinedReactants {
 public:
     void Add(const Species& species);
-    std::vector<Species> GetCombinedSpecies() const;
+    [[nodiscard]] std::vector<Species> GetCombinedSpecies() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const CombinedReactants& combinedReactants);
 private:
     std::vector<Species> m_combined_species;
 };

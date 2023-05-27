@@ -19,13 +19,12 @@ public:
     Reaction add_reactant(Species species); // Might need to update this
     Reaction add_product(Species species); // Might need to update this
 
-    float get_rate_constant() const;
-    void set_rate_constant(float rate_constant);
-    float get_delay() const;
-    void set_delay(float delay);
+    std::vector<Species> GetCombinedSpecies() const;
+
     [[nodiscard]] const std::vector<std::shared_ptr<Species>>& get_reactants() const;
     [[nodiscard]] const std::vector<std::shared_ptr<Species>>& get_products() const;
 
+    friend std::ostream& operator<<(std::ostream& os, const Reaction& reaction);
 private:
     std::vector<std::shared_ptr<Species>> m_reactants;
     std::vector<std::shared_ptr<Species>> m_products;
@@ -33,14 +32,27 @@ private:
     float m_delay = 0.0;
 };
 
-Reaction operator>>=(const CombinedReactants& combinedReactants, const Species& species){
+Reaction operator>>=(const CombinedReactants& combinedReactants, const Species& product){
     Reaction reaction;
 
     for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
         reaction.add_reactant(reactant);
     }
 
-    reaction.add_product(species);
+    reaction.add_product(product);
+
+    return reaction;
+}
+
+// Similar to the previous overload please add operator>>= such that I can cover the case of a single reactactant and multiple products
+Reaction operator>>=(const Species& reactant, const CombinedReactants& combinedReactants){
+    Reaction reaction;
+
+    reaction.add_reactant(reactant);
+
+    for(auto const& product : combinedReactants.GetCombinedSpecies()){
+        reaction.add_product(product);
+    }
 
     return reaction;
 }

@@ -16,26 +16,24 @@ Reaction Reaction::add_product(Species species) {
     return *this;
 }
 
-float Reaction::get_rate_constant() const {
-    return m_rate_constant;
-}
-
-void Reaction::set_rate_constant(float rate_constant) {
-    m_rate_constant = rate_constant;
-}
-
-float Reaction::get_delay() const {
-    return m_delay;
-}
-
-void Reaction::set_delay(float delay) {
-    m_delay = delay;
-}
-
 [[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_reactants() const {
     return m_reactants;
 }
 
 [[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_products() const {
     return m_products;
+}
+
+std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
+    // Print reactants
+    for (const auto& reactant : reaction.get_reactants()) {
+        os << *reactant << " + ";
+    }
+    os << " -> "; // separator for reaction
+
+    // Print products
+    for (const auto& product : reaction.get_products()) {
+        os << *product << " + ";
+    }
+    return os;
 }

@@ -11,3 +11,11 @@ void CombinedReactants::Add(const Species& species) {
 std::vector<Species> CombinedReactants::GetCombinedSpecies() const{
     return m_combined_species;
 }
+
+std::ostream& operator<<(std::ostream& os, const CombinedReactants& combinedReactants) {
+    // Print the Species objects in the CombinedReactants object
+    for (const auto& species : combinedReactants.GetCombinedSpecies()) {
+        os << species << " + ";
+    }
+    return os;
+}
