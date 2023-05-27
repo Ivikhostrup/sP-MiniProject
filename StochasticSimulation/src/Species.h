@@ -7,15 +7,18 @@
 
 
 #include <string>
+#include <iostream>
 
 class Species {
 public:
     Species(std::string name, int initialQuantity):
             m_name(std::move(name)), m_quantity(initialQuantity) {}
 
-    // function definition for increasing quantity
+    std::string GetName() const;
+    int GetQuantity() const;
     void IncreaseQuantity();
     void DecreaseQuantity();
+
 
     friend std::ostream& operator<<(std::ostream& os, const Species& species);
 private:

@@ -3,16 +3,15 @@
 //
 
 #include "Reaction.h"
+#include <iostream>
 
-Reaction Reaction::add_reactant(Species species){
-    auto sharedSpecies = std::make_shared<Species>(species);
-    m_reactants.push_back(sharedSpecies);
+Reaction Reaction::add_reactant(const std::shared_ptr<Species>& species){
+    m_reactants.push_back(species);
     return *this;
 }
 
-Reaction Reaction::add_product(Species species) {
-    auto sharedSpecies = std::make_shared<Species>(species);
-    m_products.push_back(sharedSpecies);
+Reaction Reaction::add_product(const std::shared_ptr<Species>& species) {
+    m_products.push_back(species);
     return *this;
 }
 
