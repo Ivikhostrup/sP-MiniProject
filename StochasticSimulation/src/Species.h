@@ -26,4 +26,5 @@ private:
     int m_quantity;
 };
 
+
 #endif //STOCHASTICSIMULATION_SPECIES_H

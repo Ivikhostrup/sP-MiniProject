@@ -25,14 +25,73 @@ Reaction Reaction::add_product(const std::shared_ptr<Species>& species) {
 
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
     // Print reactants
+    size_t count = 0;
     for (const auto& reactant : reaction.get_reactants()) {
-        os << *reactant << " + ";
+        os << *reactant;
+        if(++count < reaction.get_reactants().size()){
+            os << " + ";
+        }
     }
     os << " -> "; // separator for reaction
 
     // Print products
+    count = 0;
     for (const auto& product : reaction.get_products()) {
-        os << *product << " + ";
+        os << *product;
+        if(++count < reaction.get_products().size()){
+            os << " + ";
+        }
     }
     return os;
+}
+
+// Multiple reactants and single products
+Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product){
+    Reaction reaction;
+
+    for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
+        reaction.add_reactant(reactant);
+    }
+
+    reaction.add_product(product);
+
+    return reaction;
+}
+
+// single reactactant and multiple products
+Reaction operator>>=(const std::shared_ptr<Species>& reactant, const CombinedElements& combinedProducts){
+    Reaction reaction;
+
+    reaction.add_reactant(reactant);
+
+    for(auto const& product : combinedProducts.GetCombinedSpecies()){
+        reaction.add_product(product);
+    }
+
+    return reaction;
+}
+
+// Multiple reactants and multiple products
+Reaction operator>>=(const CombinedElements& combinedReactants, const CombinedElements& combinedProducts){
+    Reaction reaction;
+
+    for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
+        reaction.add_reactant(reactant);
+    }
+
+    for(auto const& product : combinedProducts.GetCombinedSpecies()){
+        reaction.add_product(product);
+    }
+
+    return reaction;
+}
+
+// single reactactant and a single product
+Reaction operator>>=(const std::shared_ptr<Species>& reactant, const std::shared_ptr<Species>& product){
+    Reaction reaction;
+
+    reaction.add_reactant(reactant);
+    reaction.add_product(product);
+
+    return reaction;
 }

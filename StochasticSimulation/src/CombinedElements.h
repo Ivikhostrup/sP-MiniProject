@@ -22,14 +22,7 @@ private:
     std::vector<std::shared_ptr<Species>> m_combined_species;
 };
 
-CombinedElements operator+(const std::shared_ptr<Species>& leftElement, const std::shared_ptr<Species>& rightElement) {
-    CombinedElements combination;
-
-    combination.Add(leftElement);
-    combination.Add(rightElement);
-
-    return combination;
-}
+CombinedElements operator+(const std::shared_ptr<Species>& leftElement, const std::shared_ptr<Species>& rightElement);
 
 
 #endif //STOCHASTICSIMULATION_COMBINEDELEMENTS_H

@@ -20,3 +20,12 @@ std::ostream& operator<<(std::ostream& os, const CombinedElements& combinedReact
     }
     return os;
 }
+
+CombinedElements operator+(const std::shared_ptr<Species>& leftElement, const std::shared_ptr<Species>& rightElement) {
+    CombinedElements combination;
+
+    combination.Add(leftElement);
+    combination.Add(rightElement);
+
+    return combination;
+}

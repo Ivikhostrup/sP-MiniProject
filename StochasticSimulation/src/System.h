@@ -13,10 +13,13 @@ class System {
 public:
     void Simulate();
     void AddSpecies(const std::shared_ptr<Species>& species);
-    
+    void AddReaction(const std::shared_ptr<Reaction>& reaction, const size_t& rate_constant);
+
 
 private:
     std::vector<std::shared_ptr<Species>> m_species;
+    std::vector<std::shared_ptr<Reaction>> m_reactions;
+    size_t m_rate_constant = 0;
     size_t m_delay = 0.0;
 };
 
