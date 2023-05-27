@@ -42,7 +42,12 @@ std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
             os << " + ";
         }
     }
+    os << " (rate constant: " << reaction.m_rate_constant << ")";
     return os;
+}
+
+void Reaction::set_rate_constant(const size_t& rate_constant){
+    m_rate_constant = rate_constant;
 }
 
 // Multiple reactants and single products

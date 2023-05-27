@@ -17,6 +17,7 @@ class Reaction {
 public:
     Reaction add_reactant(const std::shared_ptr<Species>& species);
     Reaction add_product(const std::shared_ptr<Species>& species);
+    void set_rate_constant(const size_t& rate_constant);
 
     [[nodiscard]] const std::vector<std::shared_ptr<Species>>& get_reactants() const;
     [[nodiscard]] const std::vector<std::shared_ptr<Species>>& get_products() const;
@@ -25,6 +26,7 @@ public:
 private:
     std::vector<std::shared_ptr<Species>> m_reactants;
     std::vector<std::shared_ptr<Species>> m_products;
+    size_t m_rate_constant = 0;
 };
 
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product);
