@@ -5,6 +5,7 @@
 #include "Reaction.h"
 #include <iostream>
 #include <sstream>
+#include <random>
 
 void Reaction::add_reactant(const std::shared_ptr<Species>& species){
     m_reactants.Add(species);
@@ -66,6 +67,24 @@ void Reaction::set_delay(const size_t &delay) {
 
 size_t Reaction::get_delay() const {
     return m_delay;
+}
+
+double Reaction::compute_delay() const {
+    size_t lambda = m_rate_constant;
+
+    for(const auto& reactant : m_reactants.GetCombinedSpecies()){
+        lambda *= reactant->GetQuantity();
+    }
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    std::exponential_distribution<double> distribution(lambda);
+
+    double delay_k = distribution(gen);
+    
+    return delay_k;
+
 }
 
 // Multiple reactants and single products

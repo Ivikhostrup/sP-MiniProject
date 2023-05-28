@@ -15,6 +15,7 @@ public:
             m_name(std::move(name)), m_quantity(initialQuantity) {}
 
     const std::string& GetName() const;
+    const size_t& GetQuantity() const;
     void IncreaseQuantity();
     void DecreaseQuantity();
 

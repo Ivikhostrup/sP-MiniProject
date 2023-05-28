@@ -20,6 +20,8 @@ public:
     void set_rate_constant(const size_t& rate_constant);
     void set_delay(const size_t& delay);
     [[nodiscard]] size_t get_delay() const;
+    [[nodiscard]] double compute_delay() const;
+
 
     [[nodiscard]] const CombinedElements& get_reactants() const;
     [[nodiscard]] const CombinedElements& get_products() const;

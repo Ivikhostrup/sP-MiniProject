@@ -38,5 +38,5 @@ std::ostream& operator<<(std::ostream& os, const System& system) {
 }
 
 void System::ComputeDelay(std::shared_ptr<Reaction> &reaction) {
-
+    for (auto& reaction_pair : m_symbolTable_reactions.GetSymbol())
 }
