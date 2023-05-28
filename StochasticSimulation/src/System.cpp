@@ -10,9 +10,10 @@ void System::Simulate() {
 
 }
 
-void System::AddSpecies(const std::string& name, const size_t& initial_amount) {
+std::shared_ptr<Species> System::AddSpecies(const std::string& name, const size_t& initial_amount) {
     auto new_species = std::make_shared<Species>(name, initial_amount);
     m_species.push_back(new_species);
+    return new_species;
 }
 
 void System::AddReaction(const Reaction &reaction, const size_t &rate_constant) {

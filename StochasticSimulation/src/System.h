@@ -12,7 +12,7 @@
 class System {
 public:
     void Simulate();
-    void AddSpecies(const std::string& name, const size_t& initial_amount);
+    std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     void AddReaction(const Reaction& reaction, const size_t& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
 
@@ -20,10 +20,8 @@ public:
 private:
     std::vector<std::shared_ptr<Species>> m_species;
     std::vector<std::shared_ptr<Reaction>> m_reactions;
-    size_t m_delay = 0.0;
 };
 
-// Constructor til at tage start state og reactions ind
 
 
 

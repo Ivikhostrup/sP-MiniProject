@@ -20,6 +20,11 @@ private:
 };
 
 template<typename T>
+std::shared_ptr<T> SymbolTable<T>::GetSymbol(std::string &name) {
+    return m_symbol_table[name];
+}
+
+template<typename T>
 void SymbolTable<T>::AddSymbol(std::string &name, const std::shared_ptr<T> &object) {
     m_symbol_table[name] = object;
 }
