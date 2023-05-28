@@ -42,7 +42,6 @@ void System::ComputeDelay() {
     std::mt19937 gen(rd());
 
     for(const auto& [name, reaction] : reaction_map){
-        auto& current_reaction = reaction;
-        current_reaction->ComputeDelay(gen);
+        reaction->ComputeDelay(gen);
     }
 }

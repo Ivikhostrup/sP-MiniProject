@@ -21,7 +21,7 @@ public:
     void set_rate_constant(const double& rate_constant);
     void set_delay(const double& delay);
     [[nodiscard]] double get_delay() const;
-    [[nodiscard]] double ComputeDelay(std::mt19937& gen);
+    void ComputeDelay(std::mt19937& gen);
 
 
     [[nodiscard]] const CombinedElements& get_reactants() const;

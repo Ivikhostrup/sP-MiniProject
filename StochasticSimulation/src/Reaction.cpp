@@ -69,7 +69,7 @@ double Reaction::get_delay() const {
     return m_delay;
 }
 
-double Reaction::ComputeDelay(std::mt19937& gen) {
+void Reaction::ComputeDelay(std::mt19937& gen) {
     auto lambda = static_cast<double>(m_rate_constant);
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
@@ -79,8 +79,6 @@ double Reaction::ComputeDelay(std::mt19937& gen) {
     std::exponential_distribution distribution(lambda);
 
     m_delay = distribution(gen);
-
-    return m_delay;
 }
 
 // Multiple reactants and single products
