@@ -60,6 +60,14 @@ void Reaction::print_reaction(std::ostream &os) const {
     }
 }
 
+void Reaction::set_delay(const size_t &delay) {
+    m_delay = delay;
+}
+
+size_t Reaction::get_delay() const {
+    return m_delay;
+}
+
 // Multiple reactants and single products
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product){
     Reaction reaction;

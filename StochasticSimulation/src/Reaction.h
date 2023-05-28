@@ -18,6 +18,8 @@ public:
     void add_reactant(const std::shared_ptr<Species>& species);
     void add_product(const std::shared_ptr<Species>& species);
     void set_rate_constant(const size_t& rate_constant);
+    void set_delay(const size_t& delay);
+    [[nodiscard]] size_t get_delay() const;
 
     [[nodiscard]] const CombinedElements& get_reactants() const;
     [[nodiscard]] const CombinedElements& get_products() const;
@@ -28,6 +30,7 @@ private:
     CombinedElements m_reactants;
     CombinedElements m_products;
     size_t m_rate_constant = 0;
+    size_t m_delay = 0;
     void print_reaction(std::ostream& os) const;
 };
 
