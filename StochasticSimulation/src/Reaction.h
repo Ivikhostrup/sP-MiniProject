@@ -22,11 +22,13 @@ public:
     [[nodiscard]] const CombinedElements& get_reactants() const;
     [[nodiscard]] const CombinedElements& get_products() const;
 
+    std::string to_string() const;
     friend std::ostream& operator<<(std::ostream& os, const Reaction& reaction);
 private:
     CombinedElements m_reactants;
     CombinedElements m_products;
     size_t m_rate_constant = 0;
+    void print_reaction(std::ostream& os) const;
 };
 
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product);

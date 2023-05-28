@@ -4,6 +4,7 @@
 
 #include "Reaction.h"
 #include <iostream>
+#include <sstream>
 
 void Reaction::add_reactant(const std::shared_ptr<Species>& species){
     m_reactants.Add(species);
@@ -21,13 +22,29 @@ void Reaction::add_product(const std::shared_ptr<Species>& species) {
     return m_products;
 }
 
-// << overload to print reaction and products
+
+void Reaction::set_rate_constant(const size_t& rate_constant){
+    m_rate_constant = rate_constant;
+}
+
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
+    reaction.print_reaction(os);
+    os << " (rate constant: " << reaction.m_rate_constant << ")";
+    return os;
+}
+
+std::string Reaction::to_string() const {
+    std::ostringstream os;
+    print_reaction(os);
+    return os.str();
+}
+
+void Reaction::print_reaction(std::ostream &os) const {
     // Print reactants
     size_t count = 0;
-    for (const auto& reactant : reaction.get_reactants().GetCombinedSpecies()) {
+    for (const auto& reactant : this->get_reactants().GetCombinedSpecies()) {
         os << *reactant;
-        if(++count < reaction.get_reactants().GetCombinedSpecies().size()){
+        if(++count < this->get_reactants().GetCombinedSpecies().size()){
             os << " + ";
         }
     }
@@ -35,17 +52,12 @@ std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
 
     // Print products
     count = 0;
-    for (const auto& product : reaction.get_products().GetCombinedSpecies()) {
+    for (const auto& product : this->get_products().GetCombinedSpecies()) {
         os << *product;
-        if(++count < reaction.get_products().GetCombinedSpecies().size()){
+        if(++count < this->get_products().GetCombinedSpecies().size()){
             os << " + ";
         }
     }
-    os << " (rate constant: " << reaction.m_rate_constant << ")";
-}
-
-void Reaction::set_rate_constant(const size_t& rate_constant){
-    m_rate_constant = rate_constant;
 }
 
 // Multiple reactants and single products
