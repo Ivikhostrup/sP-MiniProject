@@ -12,13 +12,12 @@
 
 class System {
 public:
-    void Simulate();
+    void Simulate(double endTime);
     void ComputeDelay();
 
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
-    void AddReaction(const Reaction& reaction, const size_t& rate_constant);
+    void AddReaction(const Reaction& reaction, const double& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
-
 
     friend std::ostream& operator<<(std::ostream& os, const System& system);
 private:

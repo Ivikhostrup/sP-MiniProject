@@ -16,9 +16,10 @@
 
 class Reaction {
 public:
-    void add_reactant(const std::shared_ptr<Species>& species);
-    void add_product(const std::shared_ptr<Species>& species);
-    void set_rate_constant(const double& rate_constant);
+    void AddReactant(const std::shared_ptr<Species>& species);
+    void AddProduct(const std::shared_ptr<Species>& species);
+    void SetRateConstant(const double& rate_constant);
+    [[nodiscard]] double get_rate_constant() const;
     void set_delay(const double& delay);
     [[nodiscard]] double get_delay() const;
     void ComputeDelay(std::mt19937& gen);

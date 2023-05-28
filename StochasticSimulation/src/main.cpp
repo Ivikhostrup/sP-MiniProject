@@ -7,15 +7,16 @@
 int main() {
     System system;
 
-    auto DA = system.AddSpecies("DA", 0);
-    auto R = system.AddSpecies("R", 0);
-    auto D_A = system.AddSpecies("D_A", 0);
-    auto DR = system.AddSpecies("DR", 0);
+    auto A = system.AddSpecies("A", 100);
+    auto B = system.AddSpecies("B", 0);
+    auto C = system.AddSpecies("C", 1);
 
-    system.AddReaction(DA + R >>= D_A + DR, 1);
+    const double lambda = 0.001;
 
-    // print reactions in system
-    std::cout << system << std::endl;
+    system.AddReaction(A + B >>= B + C, lambda);
+
+    system.Simulate(100);
+
 
     return 0;
 }

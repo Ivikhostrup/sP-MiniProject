@@ -16,6 +16,8 @@ public:
 
     const std::string& GetName() const;
     const size_t& GetQuantity() const;
+    // set m_quantity
+    void SetQuantity(const size_t& quantity);
     void IncreaseQuantity();
     void DecreaseQuantity();
 

@@ -7,11 +7,11 @@
 #include <sstream>
 #include <random>
 
-void Reaction::add_reactant(const std::shared_ptr<Species>& species){
+void Reaction::AddReactant(const std::shared_ptr<Species>& species){
     m_reactants.Add(species);
 }
 
-void Reaction::add_product(const std::shared_ptr<Species>& species) {
+void Reaction::AddProduct(const std::shared_ptr<Species>& species) {
     m_products.Add(species);
 }
 
@@ -24,7 +24,7 @@ void Reaction::add_product(const std::shared_ptr<Species>& species) {
 }
 
 
-void Reaction::set_rate_constant(const double& rate_constant){
+void Reaction::SetRateConstant(const double& rate_constant){
     m_rate_constant = rate_constant;
 }
 
@@ -81,15 +81,19 @@ void Reaction::ComputeDelay(std::mt19937& gen) {
     m_delay = distribution(gen);
 }
 
+double Reaction::get_rate_constant() const {
+    return m_rate_constant;
+}
+
 // Multiple reactants and single products
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product){
     Reaction reaction;
 
     for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
-        reaction.add_reactant(reactant);
+        reaction.AddReactant(reactant);
     }
 
-    reaction.add_product(product);
+    reaction.AddProduct(product);
 
     return reaction;
 }
@@ -98,10 +102,10 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const std::share
 Reaction operator>>=(const std::shared_ptr<Species>& reactant, const CombinedElements& combinedProducts){
     Reaction reaction;
 
-    reaction.add_reactant(reactant);
+    reaction.AddReactant(reactant);
 
     for(auto const& product : combinedProducts.GetCombinedSpecies()){
-        reaction.add_product(product);
+        reaction.AddProduct(product);
     }
 
     return reaction;
@@ -112,11 +116,11 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const CombinedEl
     Reaction reaction;
 
     for(auto const& reactant : combinedReactants.GetCombinedSpecies()){
-        reaction.add_reactant(reactant);
+        reaction.AddReactant(reactant);
     }
 
     for(auto const& product : combinedProducts.GetCombinedSpecies()){
-        reaction.add_product(product);
+        reaction.AddProduct(product);
     }
 
     return reaction;
@@ -126,8 +130,8 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const CombinedEl
 Reaction operator>>=(const std::shared_ptr<Species>& reactant, const std::shared_ptr<Species>& product){
     Reaction reaction;
 
-    reaction.add_reactant(reactant);
-    reaction.add_product(product);
+    reaction.AddReactant(reactant);
+    reaction.AddProduct(product);
 
     return reaction;
 }
