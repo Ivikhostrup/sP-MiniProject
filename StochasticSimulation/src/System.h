@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "Reaction.h"
+#include "SymbolTable.h"
 
 class System {
 public:
@@ -20,6 +21,8 @@ public:
 private:
     std::vector<std::shared_ptr<Species>> m_species;
     std::vector<std::shared_ptr<Reaction>> m_reactions;
+    SymbolTable<Species> m_symbolTable_species;
+    SymbolTable<Reaction> m_symbolTable_reactions;
 };
 
 

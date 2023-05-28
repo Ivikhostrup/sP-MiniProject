@@ -12,7 +12,7 @@
 template <typename T>
 class SymbolTable {
 public:
-    void AddSymbol(std::string& name, const std::shared_ptr<T>& object);
+    void AddSymbol(const std::string& name, const std::shared_ptr<T>& object);
     std::shared_ptr<T> GetSymbol(std::string& name);
 
 private:
@@ -25,7 +25,7 @@ std::shared_ptr<T> SymbolTable<T>::GetSymbol(std::string &name) {
 }
 
 template<typename T>
-void SymbolTable<T>::AddSymbol(std::string &name, const std::shared_ptr<T> &object) {
+void SymbolTable<T>::AddSymbol(const std::string &name, const std::shared_ptr<T> &object) {
     m_symbol_table[name] = object;
 }
 
