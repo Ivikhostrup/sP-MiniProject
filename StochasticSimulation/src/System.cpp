@@ -36,3 +36,7 @@ std::ostream& operator<<(std::ostream& os, const System& system) {
     }
     return os;
 }
+
+void System::ComputeDelay(std::shared_ptr<Reaction> &reaction) {
+
+}

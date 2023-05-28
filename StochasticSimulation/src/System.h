@@ -13,6 +13,8 @@
 class System {
 public:
     void Simulate();
+    void ComputeDelay(std::shared_ptr<Reaction>& reaction);
+
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     void AddReaction(const Reaction& reaction, const size_t& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
