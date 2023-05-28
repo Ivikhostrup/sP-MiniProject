@@ -14,8 +14,7 @@ public:
     Species(std::string name, int initialQuantity):
             m_name(std::move(name)), m_quantity(initialQuantity) {}
 
-    std::string GetName() const;
-    int GetQuantity() const;
+    const std::string& GetName() const;
     void IncreaseQuantity();
     void DecreaseQuantity();
 
@@ -23,7 +22,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Species& species);
 private:
     std::string m_name;
-    int m_quantity;
+    size_t m_quantity;
 };
 
 

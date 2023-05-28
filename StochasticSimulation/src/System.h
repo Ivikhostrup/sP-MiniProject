@@ -12,8 +12,8 @@
 class System {
 public:
     void Simulate();
-    void AddSpecies(const std::shared_ptr<Species>& species);
-    void AddReaction(const std::shared_ptr<Reaction>& reaction, const size_t& rate_constant);
+    void AddSpecies(const std::string& name, const size_t& initial_amount);
+    void AddReaction(const Reaction& reaction, const size_t& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
 
     friend std::ostream& operator<<(std::ostream& os, const System& system);

@@ -6,12 +6,8 @@
 #include "Species.h"
 #include <iostream>
 
-std::string Species::GetName() const {
+const std::string& Species::GetName() const {
     return m_name;
-}
-
-int Species::GetQuantity() const {
-    return m_quantity;
 }
 
 void Species::IncreaseQuantity() {

@@ -17,16 +17,11 @@ int main() {
     auto C = std::make_shared<Species>("C", 0);
 
 
-    CombinedElements combinedAB = DA + DR;
-    CombinedElements combinedCD = MA + MR;
-    auto reaction1 = std::make_shared<Reaction>(combinedAB >>= combinedCD);
-    auto reaction2 = std::make_shared<Reaction>(combinedCD >>= combinedAB);
-
-    // Declare new system object
     System system;
-    // Add reaction to system
-    system.AddReaction(reaction1, 1);
-    system.AddReaction(reaction2, 2);
+    system.AddSpecies("A", 0);
+    system.AddReaction(DA + R >>= D_A + DR, 1);
+
+
 
     // print reactions in system
     std::cout << system << std::endl;

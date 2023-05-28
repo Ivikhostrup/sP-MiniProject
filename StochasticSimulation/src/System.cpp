@@ -10,13 +10,13 @@ void System::Simulate() {
 
 }
 
-void System::AddSpecies(const std::shared_ptr<Species>& species) {
-    // Add species to vector of species
-    m_species.push_back(species);
+void System::AddSpecies(const std::string& name, const size_t& initial_amount) {
+    auto new_species = std::make_shared<Species>(name, initial_amount);
+    m_species.push_back(new_species);
 }
 
-void System::AddReaction(const std::shared_ptr<Reaction> &reaction, const size_t &rate_constant) {
-    auto new_reaction = std::make_shared<Reaction>(*reaction);
+void System::AddReaction(const Reaction &reaction, const size_t &rate_constant) {
+    auto new_reaction = std::make_shared<Reaction>(reaction);
     new_reaction->set_rate_constant(rate_constant);
     m_reactions.push_back(new_reaction);
 }

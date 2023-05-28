@@ -5,30 +5,29 @@
 #include "Reaction.h"
 #include <iostream>
 
-Reaction Reaction::add_reactant(const std::shared_ptr<Species>& species){
-    m_reactants.push_back(species);
-    return *this;
+void Reaction::add_reactant(const std::shared_ptr<Species>& species){
+    m_reactants.Add(species);
 }
 
-Reaction Reaction::add_product(const std::shared_ptr<Species>& species) {
-    m_products.push_back(species);
-    return *this;
+void Reaction::add_product(const std::shared_ptr<Species>& species) {
+    m_products.Add(species);
 }
 
-[[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_reactants() const {
+[[nodiscard]] const CombinedElements& Reaction::get_reactants() const {
     return m_reactants;
 }
 
-[[nodiscard]] const std::vector<std::shared_ptr<Species>>& Reaction::get_products() const {
+[[nodiscard]] const CombinedElements& Reaction::get_products() const {
     return m_products;
 }
 
+// << overload to print reaction and products
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
     // Print reactants
     size_t count = 0;
-    for (const auto& reactant : reaction.get_reactants()) {
+    for (const auto& reactant : reaction.get_reactants().GetCombinedSpecies()) {
         os << *reactant;
-        if(++count < reaction.get_reactants().size()){
+        if(++count < reaction.get_reactants().GetCombinedSpecies().size()){
             os << " + ";
         }
     }
@@ -36,14 +35,13 @@ std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
 
     // Print products
     count = 0;
-    for (const auto& product : reaction.get_products()) {
+    for (const auto& product : reaction.get_products().GetCombinedSpecies()) {
         os << *product;
-        if(++count < reaction.get_products().size()){
+        if(++count < reaction.get_products().GetCombinedSpecies().size()){
             os << " + ";
         }
     }
     os << " (rate constant: " << reaction.m_rate_constant << ")";
-    return os;
 }
 
 void Reaction::set_rate_constant(const size_t& rate_constant){
