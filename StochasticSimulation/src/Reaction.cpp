@@ -42,22 +42,13 @@ std::string Reaction::to_string() const {
 
 void Reaction::print_reaction(std::ostream &os) const {
     // Print reactants
-    size_t count = 0;
     for (const auto& reactant : this->get_reactants().GetCombinedSpecies()) {
         os << *reactant;
-        if(++count < this->get_reactants().GetCombinedSpecies().size()){
-            os << " + ";
-        }
     }
-    os << " -> "; // separator for reaction
 
     // Print products
-    count = 0;
     for (const auto& product : this->get_products().GetCombinedSpecies()) {
         os << *product;
-        if(++count < this->get_products().GetCombinedSpecies().size()){
-            os << " + ";
-        }
     }
 }
 
@@ -72,7 +63,12 @@ double Reaction::get_delay() const {
 void Reaction::ComputeDelay(std::mt19937& gen) {
     auto lambda = static_cast<double>(m_rate_constant);
 
+
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
+        if(reactant->GetQuantity() == 0){
+            continue;
+        }
+
         lambda *= static_cast<double>(reactant->GetQuantity());
     }
 

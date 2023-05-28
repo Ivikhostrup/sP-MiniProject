@@ -16,7 +16,7 @@ std::vector<std::shared_ptr<Species>> CombinedElements::GetCombinedSpecies() con
 std::ostream& operator<<(std::ostream& os, const CombinedElements& combinedReactants) {
     // Print the Species objects in the CombinedElements object
     for (const auto& species : combinedReactants.GetCombinedSpecies()) {
-        os << *species << " + ";
+        os << *species;
     }
     return os;
 }

@@ -13,8 +13,10 @@ void System::Simulate(double endTime) {
     while (startTime < endTime){
         ComputeDelay();
 
+
         auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
         auto reaction_with_min_delay = reaction_map.begin()->second;
+
 
         for (const auto& [_, reaction] : reaction_map) {
             if (reaction->get_delay() < reaction_with_min_delay->get_delay()) {
@@ -39,7 +41,8 @@ void System::Simulate(double endTime) {
             product->SetQuantity(product->GetQuantity() + reaction_with_min_delay->get_rate_constant());
         }
 
-        std::cout << reaction_with_min_delay << std::endl;
+        std::cout << *reaction_with_min_delay;
+
     }
 }
 

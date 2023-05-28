@@ -15,7 +15,7 @@ int main() {
 
     system.AddReaction(A + B >>= B + C, lambda);
 
-    system.Simulate(100);
+    system.Simulate(100.0);
 
 
     return 0;

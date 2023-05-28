@@ -33,8 +33,8 @@ public:
 private:
     CombinedElements m_reactants;
     CombinedElements m_products;
-    double m_rate_constant = 0;
-    double m_delay = 0;
+    double m_rate_constant;
+    double m_delay;
     void print_reaction(std::ostream& os) const;
 };
 
