@@ -24,7 +24,7 @@ void Reaction::add_product(const std::shared_ptr<Species>& species) {
 }
 
 
-void Reaction::set_rate_constant(const size_t& rate_constant){
+void Reaction::set_rate_constant(const double& rate_constant){
     m_rate_constant = rate_constant;
 }
 
@@ -61,30 +61,26 @@ void Reaction::print_reaction(std::ostream &os) const {
     }
 }
 
-void Reaction::set_delay(const size_t &delay) {
+void Reaction::set_delay(const double& delay) {
     m_delay = delay;
 }
 
-size_t Reaction::get_delay() const {
+double Reaction::get_delay() const {
     return m_delay;
 }
 
-double Reaction::compute_delay() const {
-    size_t lambda = m_rate_constant;
+double Reaction::ComputeDelay(std::mt19937& gen) {
+    auto lambda = static_cast<double>(m_rate_constant);
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
-        lambda *= reactant->GetQuantity();
+        lambda *= static_cast<double>(reactant->GetQuantity());
     }
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    std::exponential_distribution distribution(lambda);
 
-    std::exponential_distribution<double> distribution(lambda);
+    m_delay = distribution(gen);
 
-    double delay_k = distribution(gen);
-    
-    return delay_k;
-
+    return m_delay;
 }
 
 // Multiple reactants and single products

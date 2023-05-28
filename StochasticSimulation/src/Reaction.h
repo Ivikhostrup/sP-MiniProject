@@ -12,15 +12,16 @@
 #include "Species.h"
 #include "CombinedElements.h"
 #include <iostream>
+#include <random>
 
 class Reaction {
 public:
     void add_reactant(const std::shared_ptr<Species>& species);
     void add_product(const std::shared_ptr<Species>& species);
-    void set_rate_constant(const size_t& rate_constant);
-    void set_delay(const size_t& delay);
-    [[nodiscard]] size_t get_delay() const;
-    [[nodiscard]] double compute_delay() const;
+    void set_rate_constant(const double& rate_constant);
+    void set_delay(const double& delay);
+    [[nodiscard]] double get_delay() const;
+    [[nodiscard]] double ComputeDelay(std::mt19937& gen);
 
 
     [[nodiscard]] const CombinedElements& get_reactants() const;
@@ -31,8 +32,8 @@ public:
 private:
     CombinedElements m_reactants;
     CombinedElements m_products;
-    size_t m_rate_constant = 0;
-    size_t m_delay = 0;
+    double m_rate_constant = 0;
+    double m_delay = 0;
     void print_reaction(std::ostream& os) const;
 };
 

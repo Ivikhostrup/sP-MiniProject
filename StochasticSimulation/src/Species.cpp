@@ -27,6 +27,6 @@ std::ostream& operator<<(std::ostream& os, const Species& species) {
     return os;
 }
 
-const size_t &Species::GetQuantity() const {
+const size_t& Species::GetQuantity() const {
     return m_quantity;
 }
