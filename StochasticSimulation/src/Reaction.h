@@ -19,7 +19,7 @@ public:
     void AddReactant(const std::shared_ptr<Species>& species);
     void AddProduct(const std::shared_ptr<Species>& species);
     void SetRateConstant(const double& rate_constant);
-    [[nodiscard]] double get_rate_constant() const;
+    [[nodiscard]] double GetLambda() const;
     void set_delay(const double& delay);
     [[nodiscard]] double get_delay() const;
     void ComputeDelay(std::mt19937& gen);
@@ -33,7 +33,7 @@ public:
 private:
     CombinedElements m_reactants;
     CombinedElements m_products;
-    double m_rate_constant;
+    double m_lambda;
     double m_delay;
     void print_reaction(std::ostream& os) const;
 };

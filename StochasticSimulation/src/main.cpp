@@ -13,9 +13,9 @@ int main() {
 
     const double lambda = 0.001;
 
-    system.AddReaction(A + B >>= B + C, lambda);
+    system.AddReaction(A + C >>= B + C, lambda);
 
-    system.Simulate(100.0);
+    system.Simulate(2000.0);
 
 
     return 0;

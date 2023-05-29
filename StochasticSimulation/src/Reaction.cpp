@@ -25,13 +25,11 @@ void Reaction::AddProduct(const std::shared_ptr<Species>& species) {
 
 
 void Reaction::SetRateConstant(const double& rate_constant){
-    m_rate_constant = rate_constant;
+    m_lambda = rate_constant;
 }
 
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
     reaction.print_reaction(os);
-    os << " (rate constant: " << reaction.m_rate_constant << ")";
-    return os;
 }
 
 std::string Reaction::to_string() const {
@@ -42,13 +40,15 @@ std::string Reaction::to_string() const {
 
 void Reaction::print_reaction(std::ostream &os) const {
     // Print reactants
+    os << "Reactants" << std::endl;
     for (const auto& reactant : this->get_reactants().GetCombinedSpecies()) {
-        os << *reactant;
+        os << *reactant << "\n";
     }
 
     // Print products
+    os << "Products" << std::endl;
     for (const auto& product : this->get_products().GetCombinedSpecies()) {
-        os << *product;
+        os << *product << "\n";
     }
 }
 
@@ -61,7 +61,7 @@ double Reaction::get_delay() const {
 }
 
 void Reaction::ComputeDelay(std::mt19937& gen) {
-    auto lambda = static_cast<double>(m_rate_constant);
+    auto lambda = static_cast<double>(m_lambda);
 
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
@@ -77,8 +77,8 @@ void Reaction::ComputeDelay(std::mt19937& gen) {
     m_delay = distribution(gen);
 }
 
-double Reaction::get_rate_constant() const {
-    return m_rate_constant;
+double Reaction::GetLambda() const {
+    return m_lambda;
 }
 
 // Multiple reactants and single products

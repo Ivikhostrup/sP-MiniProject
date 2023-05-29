@@ -33,12 +33,12 @@ void System::Simulate(double endTime) {
                            [](const auto& reactant) {
                                return reactant->GetQuantity() > 0;
                            })) {
-                reactant->SetQuantity(reactant->GetQuantity() - reaction_with_min_delay->get_rate_constant());
+                reactant->SetQuantity(reactant->GetQuantity() - 1);
             }
         }
 
         for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
-            product->SetQuantity(product->GetQuantity() + reaction_with_min_delay->get_rate_constant());
+            product->SetQuantity(product->GetQuantity() + 1);
         }
 
         std::cout << *reaction_with_min_delay;

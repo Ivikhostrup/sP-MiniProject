@@ -23,7 +23,7 @@ void Species::DecreaseQuantity() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Species& species) {
-    os << species.GetName() << ": " << species.GetQuantity();
+    os << species.GetName() << ":" << species.GetQuantity() << " ";
     return os;
 }
 
