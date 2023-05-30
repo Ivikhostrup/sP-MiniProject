@@ -3,4 +3,4 @@ project(StochasticSimulation)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(StochasticSimulation src/main.cpp src/Species.cpp src/Species.h src/Reaction.cpp src/Reaction.h src/ChemicalSystem.cpp src/ChemicalSystem.h src/CombinedElements.cpp src/CombinedElements.h src/SymbolTable.cpp src/SymbolTable.h src/Monitor.cpp src/Monitor.h src/SpeciesQuantityMonitor.cpp src/SpeciesQuantityMonitor.h)
+add_executable(StochasticSimulation src/main.cpp src/Species.cpp src/Species.h src/Reaction.cpp src/Reaction.h src/ChemicalSystem.cpp src/ChemicalSystem.h src/CombinedElements.cpp src/CombinedElements.h src/SymbolTable.cpp src/SymbolTable.h src/Monitor.cpp src/Monitor.h src/SpeciesQuantityMonitor.cpp src/SpeciesQuantityMonitor.h src/Simulator.cpp src/Simulator.h)

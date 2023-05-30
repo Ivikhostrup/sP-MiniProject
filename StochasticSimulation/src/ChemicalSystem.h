@@ -13,8 +13,9 @@
 
 class ChemicalSystem {
 public:
-    void Simulate(double endTime, Monitor& monitor);
+    void Simulate(size_t endTime, Monitor& monitor);
     void ComputeDelay();
+    void Reset();
 
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     std::shared_ptr<Species> GetSpecies(const std::string& name) const;
@@ -28,6 +29,7 @@ private:
     std::vector<std::shared_ptr<Reaction>> m_reactions;
     SymbolTable<Species> m_symbolTable_species;
     SymbolTable<Reaction> m_symbolTable_reactions;
+    std::unordered_map<std::string, size_t> m_initial_quantities;
 };
 
 

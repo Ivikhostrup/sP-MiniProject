@@ -29,7 +29,8 @@ void Reaction::SetRateConstant(const double& rate_constant){
 }
 
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
-    reaction.print_reaction(os);
+    //reaction.print_reaction(os);
+    return os;
 }
 
 std::string Reaction::to_string() const {
@@ -63,12 +64,7 @@ double Reaction::get_delay() const {
 void Reaction::ComputeDelay(std::mt19937& gen) {
     auto lambda = static_cast<double>(m_lambda);
 
-
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
-        if(reactant->GetQuantity() == 0){
-            continue;
-        }
-
         lambda *= static_cast<double>(reactant->GetQuantity());
     }
 
@@ -89,7 +85,9 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const std::share
         reaction.AddReactant(reactant);
     }
 
-    reaction.AddProduct(product);
+    if(product->GetName() != "env"){
+        reaction.AddProduct(product);
+    }
 
     return reaction;
 }
@@ -101,7 +99,9 @@ Reaction operator>>=(const std::shared_ptr<Species>& reactant, const CombinedEle
     reaction.AddReactant(reactant);
 
     for(auto const& product : combinedProducts.GetCombinedSpecies()){
-        reaction.AddProduct(product);
+        if(product->GetName() != "env"){
+            reaction.AddProduct(product);
+        }
     }
 
     return reaction;
@@ -116,7 +116,9 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const CombinedEl
     }
 
     for(auto const& product : combinedProducts.GetCombinedSpecies()){
-        reaction.AddProduct(product);
+        if(product->GetName() != "env"){
+            reaction.AddProduct(product);
+        }
     }
 
     return reaction;
@@ -127,7 +129,9 @@ Reaction operator>>=(const std::shared_ptr<Species>& reactant, const std::shared
     Reaction reaction;
 
     reaction.AddReactant(reactant);
-    reaction.AddProduct(product);
+    if(product->GetName() != "env"){
+        reaction.AddProduct(product);
+    }
 
     return reaction;
 }

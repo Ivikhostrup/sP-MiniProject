@@ -4,11 +4,10 @@
 #include "Reaction.h"
 #include "ChemicalSystem.h"
 #include "SpeciesQuantityMonitor.h"
+#include "Simulator.h"
 
 int main() {
     ChemicalSystem system;
-
-
 
     auto alphaA = 50.0;
     auto alpha_A = 500.0;
@@ -35,6 +34,7 @@ int main() {
     auto A = system.AddSpecies("A", 0);
     auto R = system.AddSpecies("R", 0);
     auto C = system.AddSpecies("C", 0);
+    auto env = system.AddSpecies("env", 0);
 
     system.AddReaction(A + DA >>= D_A, gammaA);
     system.AddReaction(D_A >>= DA + A, thetaA);
@@ -46,32 +46,28 @@ int main() {
     system.AddReaction(DR >>= MR + DR, alphaR);
     system.AddReaction(MA >>= MA + A, betaA);
     system.AddReaction(MR >>= MR + R, betaR);
+    system.AddReaction(A + R >>= C, gammaC);
+    system.AddReaction(C >>= R, deltaA);
+    system.AddReaction(A >>= env, deltaA);
+    system.AddReaction(R >>= env, deltaR);
+    system.AddReaction(MA >>= env, deltaMA);
+    system.AddReaction(MR >>= env, deltaMR);
+
 
     std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
 
-    const int numTrajectories = 100;
-    std::vector<std::vector<double>> signalsA(numTrajectories), signalsR(numTrajectories), signalsC(numTrajectories);
+    Simulator simulator(system, 1, 30);
+    simulator.RunSimulation(speciesToMonitor);
 
-    for(int i = 0; i < numTrajectories; ++i) {
-        //system.Reset(); // Reset system to initial state
+    auto averageSignals = simulator.GetAverageSignals();
 
-        // Create a new monitor for this trajectory
-        SpeciesQuantityMonitor monitor(speciesToMonitor);
-
-        system.Simulate(2000, monitor); // Run simulation
-
-        // Save signals at each time point
-        const auto &signals = monitor.GetSignals();
-        signalsA[i] = signals[0];
-        signalsR[i] = signals[1];
-        signalsC[i] = signals[2];
-
+    // Print average signals over time
+    for (size_t i = 0; i < averageSignals.size(); ++i) {
+        std::cout << "Average signal at time step " << i << ": ";
+        std::cout << "C = " << averageSignals[0] << ", ";
+        std::cout << "A = " << averageSignals[1] << ", ";
+        std::cout << "R = " << averageSignals[2] << '\n';
     }
-
-
-
-    system.Simulate(2000.0);
-
 
     return 0;
 }

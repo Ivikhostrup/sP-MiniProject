@@ -4,18 +4,21 @@
 
 #include <iostream>
 #include <algorithm>
+#include <chrono>
 #include "ChemicalSystem.h"
 #include "Monitor.h"
 
 
-void ChemicalSystem::Simulate(double endTime, Monitor& monitor) {
+void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
     double startTime = 0.0;
 
     while (startTime < endTime){
+
         ComputeDelay();
 
 
         auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
+
         auto reaction_with_min_delay = reaction_map.begin()->second;
 
 
@@ -27,12 +30,15 @@ void ChemicalSystem::Simulate(double endTime, Monitor& monitor) {
 
         startTime += reaction_with_min_delay->get_delay();
 
+
         // Proceed with the reaction
+        auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
+
+
         for (const auto& reactant : reaction_with_min_delay->get_reactants().GetCombinedSpecies()) {
-            if(std::all_of(reaction_with_min_delay->get_reactants().GetCombinedSpecies().begin(),
-                           reaction_with_min_delay->get_reactants().GetCombinedSpecies().end(),
+            if(std::all_of(combinedSpecies.begin(),combinedSpecies.end(),
                            [](const auto& reactant) {
-                               return reactant->GetQuantity() > 0;
+                                    return reactant->GetQuantity() > 0;
                            })) {
                 reactant->SetQuantity(reactant->GetQuantity() - 1);
             }
@@ -42,9 +48,7 @@ void ChemicalSystem::Simulate(double endTime, Monitor& monitor) {
             product->SetQuantity(product->GetQuantity() + 1);
         }
 
-
         monitor.OnStateChange(startTime, *this);
-        std::cout << *reaction_with_min_delay;
 
     }
 }
@@ -52,6 +56,8 @@ void ChemicalSystem::Simulate(double endTime, Monitor& monitor) {
 std::shared_ptr<Species> ChemicalSystem::AddSpecies(const std::string& name, const size_t& initial_amount) {
     auto new_species = std::make_shared<Species>(name, initial_amount);
     m_symbolTable_species.AddSymbol(name, new_species);
+
+    m_initial_quantities[name] = initial_amount;
     return new_species;
 }
 
@@ -92,4 +98,10 @@ void ChemicalSystem::ComputeDelay() {
 
 std::vector<std::shared_ptr<Species>> ChemicalSystem::get_species() const {
     return m_species;
+}
+
+void ChemicalSystem::Reset() {
+    for (const auto& [name, species] : m_symbolTable_species.GetAllSymbols()) {
+        species->SetQuantity(m_initial_quantities[name]);
+    }
 }

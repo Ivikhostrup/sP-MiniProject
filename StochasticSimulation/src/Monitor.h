@@ -6,7 +6,9 @@
 #define STOCHASTICSIMULATION_MONITOR_H
 
 
-#include "ChemicalSystem.h"
+
+//forward declaration
+class ChemicalSystem;
 
 class Monitor {
 public:
