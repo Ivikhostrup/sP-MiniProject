@@ -13,14 +13,10 @@ void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
     double startTime = 0.0;
 
     while (startTime < endTime){
-
         ComputeDelay();
 
-
         auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
-
         auto reaction_with_min_delay = reaction_map.begin()->second;
-
 
         for (const auto& [_, reaction] : reaction_map) {
             if (reaction->get_delay() < reaction_with_min_delay->get_delay()) {
@@ -30,26 +26,27 @@ void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
 
         startTime += reaction_with_min_delay->get_delay();
 
-
-        // Proceed with the reaction
         auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
 
-
-        for (const auto& reactant : reaction_with_min_delay->get_reactants().GetCombinedSpecies()) {
-            if(std::all_of(combinedSpecies.begin(),combinedSpecies.end(),
-                           [](const auto& reactant) {
-                                    return reactant->GetQuantity() > 0;
-                           })) {
-                reactant->SetQuantity(reactant->GetQuantity() - 1);
+        bool reactantsSufficient = true;
+        for (const auto& reactant : combinedSpecies) {
+            if(reactant->GetQuantity() < 1) { // If amount agents is less than 1, then the reaction cannot proceed
+                reactantsSufficient = false;
+                break;
             }
         }
 
-        for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
-            product->SetQuantity(product->GetQuantity() + 1);
+        if(reactantsSufficient) {
+            for (const auto& reactant : combinedSpecies) {
+                reactant->SetQuantity(reactant->GetQuantity() - 1);
+            }
+
+            for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
+                product->SetQuantity(product->GetQuantity() + 1);
+            }
         }
 
         monitor.OnStateChange(startTime, *this);
-
     }
 }
 
