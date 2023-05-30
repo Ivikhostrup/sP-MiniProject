@@ -5,9 +5,10 @@
 #include <iostream>
 #include <algorithm>
 #include "ChemicalSystem.h"
+#include "Monitor.h"
 
 
-void ChemicalSystem::Simulate(double endTime) {
+void ChemicalSystem::Simulate(double endTime, Monitor& monitor) {
     double startTime = 0.0;
 
     while (startTime < endTime){
@@ -41,6 +42,8 @@ void ChemicalSystem::Simulate(double endTime) {
             product->SetQuantity(product->GetQuantity() + 1);
         }
 
+
+        monitor.OnStateChange(startTime, *this);
         std::cout << *reaction_with_min_delay;
 
     }
@@ -51,6 +54,11 @@ std::shared_ptr<Species> ChemicalSystem::AddSpecies(const std::string& name, con
     m_symbolTable_species.AddSymbol(name, new_species);
     return new_species;
 }
+
+std::shared_ptr<Species> ChemicalSystem::GetSpecies(const std::string& name) const {
+    return m_symbolTable_species.GetSymbol(name);
+}
+
 
 void ChemicalSystem::AddReaction(const Reaction &reaction, const double& rate_constant) {
     auto new_reaction = std::make_shared<Reaction>(reaction);

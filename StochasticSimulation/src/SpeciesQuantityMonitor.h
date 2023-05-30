@@ -15,6 +15,7 @@ public:
         : m_species_names(speciesName), m_signals(speciesName.size()) {}
 
         void OnStateChange(double time, const ChemicalSystem& chemicalSystem) override;
+        const std::vector<std::vector<double>>& GetSignals() const;
 private:
     std::vector<std::string>& m_species_names;
     std::vector<std::vector<double>> m_signals;

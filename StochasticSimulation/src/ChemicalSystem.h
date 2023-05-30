@@ -9,13 +9,15 @@
 #include <vector>
 #include "Reaction.h"
 #include "SymbolTable.h"
+#include "Monitor.h"
 
 class ChemicalSystem {
 public:
-    void Simulate(double endTime);
+    void Simulate(double endTime, Monitor& monitor);
     void ComputeDelay();
 
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
+    std::shared_ptr<Species> GetSpecies(const std::string& name) const;
     void AddReaction(const Reaction& reaction, const double& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
     std::vector<std::shared_ptr<Species>> get_species() const;

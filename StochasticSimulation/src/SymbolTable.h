@@ -14,7 +14,7 @@ template <typename T>
 class SymbolTable {
 public:
     void AddSymbol(const std::string& name, const std::shared_ptr<T>& object);
-    std::shared_ptr<T> GetSymbol(const std::string& name);
+    std::shared_ptr<T> GetSymbol(const std::string& name) const;
     const std::unordered_map<std::string, std::shared_ptr<T>>& GetAllSymbols() const;
 
 private:
@@ -22,7 +22,7 @@ private:
 };
 
 template<typename T>
-std::shared_ptr<T> SymbolTable<T>::GetSymbol(const std::string &name) {
+std::shared_ptr<T> SymbolTable<T>::GetSymbol(const std::string &name) const {
     auto item = m_symbol_table.find(name);
     if (item != m_symbol_table.end()) {
         return item->second;
