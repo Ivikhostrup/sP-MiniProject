@@ -2,10 +2,10 @@
 #include "Species.h"
 #include "CombinedElements.h"
 #include "Reaction.h"
-#include "System.h"
+#include "ChemicalSystem.h"
 
 int main() {
-    System system;
+    ChemicalSystem system;
 
     auto A = system.AddSpecies("A", 100);
     auto B = system.AddSpecies("B", 0);

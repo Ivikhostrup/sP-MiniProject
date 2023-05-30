@@ -4,10 +4,10 @@
 
 #include <iostream>
 #include <algorithm>
-#include "System.h"
+#include "ChemicalSystem.h"
 
 
-void System::Simulate(double endTime) {
+void ChemicalSystem::Simulate(double endTime) {
     double startTime = 0.0;
 
     while (startTime < endTime){
@@ -46,32 +46,32 @@ void System::Simulate(double endTime) {
     }
 }
 
-std::shared_ptr<Species> System::AddSpecies(const std::string& name, const size_t& initial_amount) {
+std::shared_ptr<Species> ChemicalSystem::AddSpecies(const std::string& name, const size_t& initial_amount) {
     auto new_species = std::make_shared<Species>(name, initial_amount);
     m_symbolTable_species.AddSymbol(name, new_species);
     return new_species;
 }
 
-void System::AddReaction(const Reaction &reaction, const double& rate_constant) {
+void ChemicalSystem::AddReaction(const Reaction &reaction, const double& rate_constant) {
     auto new_reaction = std::make_shared<Reaction>(reaction);
     new_reaction->SetRateConstant(rate_constant);
     auto reaction_name = new_reaction->to_string();
     m_symbolTable_reactions.AddSymbol(reaction_name, new_reaction);
 }
 
-std::vector<std::shared_ptr<Reaction>> System::get_reactions() const {
+std::vector<std::shared_ptr<Reaction>> ChemicalSystem::get_reactions() const {
     return m_reactions;
 }
 
 // Overload << for reactions in system
-std::ostream& operator<<(std::ostream& os, const System& system) {
+std::ostream& operator<<(std::ostream& os, const ChemicalSystem& system) {
     for (const auto& reaction : system.get_reactions()) {
         os << *reaction << std::endl;
     }
     return os;
 }
 
-void System::ComputeDelay() {
+void ChemicalSystem::ComputeDelay() {
     auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
 
     std::random_device rd;
@@ -80,4 +80,8 @@ void System::ComputeDelay() {
     for(const auto& [name, reaction] : reaction_map){
         reaction->ComputeDelay(gen);
     }
+}
+
+std::vector<std::shared_ptr<Species>> ChemicalSystem::get_species() const {
+    return m_species;
 }

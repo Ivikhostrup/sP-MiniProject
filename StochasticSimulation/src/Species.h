@@ -18,6 +18,7 @@ public:
     const size_t& GetQuantity() const;
     // set m_quantity
     void SetQuantity(const size_t& quantity);
+    // getter for m_quantity
     void IncreaseQuantity();
     void DecreaseQuantity();
 

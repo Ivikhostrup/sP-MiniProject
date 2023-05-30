@@ -2,15 +2,15 @@
 // Created by Ivik Hostrup on 5/26/2023.
 //
 
-#ifndef STOCHASTICSIMULATION_SYSTEM_H
-#define STOCHASTICSIMULATION_SYSTEM_H
+#ifndef STOCHASTICSIMULATION_CHEMICALSYSTEM_H
+#define STOCHASTICSIMULATION_CHEMICALSYSTEM_H
 
 
 #include <vector>
 #include "Reaction.h"
 #include "SymbolTable.h"
 
-class System {
+class ChemicalSystem {
 public:
     void Simulate(double endTime);
     void ComputeDelay();
@@ -18,8 +18,9 @@ public:
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     void AddReaction(const Reaction& reaction, const double& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
+    std::vector<std::shared_ptr<Species>> get_species() const;
 
-    friend std::ostream& operator<<(std::ostream& os, const System& system);
+    friend std::ostream& operator<<(std::ostream& os, const ChemicalSystem& system);
 private:
     std::vector<std::shared_ptr<Species>> m_species;
     std::vector<std::shared_ptr<Reaction>> m_reactions;
@@ -30,4 +31,4 @@ private:
 
 
 
-#endif //STOCHASTICSIMULATION_SYSTEM_H
+#endif //STOCHASTICSIMULATION_CHEMICALSYSTEM_H
