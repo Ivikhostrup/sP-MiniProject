@@ -11,6 +11,7 @@
 
 void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
     double startTime = 0.0;
+    double nextRecordHour = 0.0;
 
     while (startTime < endTime){
         ComputeDelay();
@@ -46,7 +47,10 @@ void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
             }
         }
 
-        monitor.OnStateChange(startTime, *this);
+        if (startTime >= nextRecordHour) {
+            monitor.OnStateChange(nextRecordHour, *this);  // Record data at the hour mark
+            nextRecordHour += 1;  // Schedule next recording at the next hour
+        };
     }
 }
 
@@ -85,11 +89,8 @@ std::ostream& operator<<(std::ostream& os, const ChemicalSystem& system) {
 void ChemicalSystem::ComputeDelay() {
     auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
 
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
     for(const auto& [name, reaction] : reaction_map){
-        reaction->ComputeDelay(gen);
+        reaction->ComputeDelay(m_gen);
     }
 }
 

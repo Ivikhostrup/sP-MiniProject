@@ -14,8 +14,8 @@ public:
         : m_system(system), m_numTrajectories(numTrajectories), m_endTime(endTime) {}
 
     void RunSimulation(const std::vector<std::string>& speciesToMonitor);
-    std::vector<double> GetAverageSignals() const;
-    double ComputeAverageSignal(const std::vector<double>& signal) const;
+    std::vector<std::vector<double>> GetAverageSignals() const;
+    void WriteToCsv(const std::string& filename, const std::vector<std::string>& speciesNames) const;
 
 
 private:
