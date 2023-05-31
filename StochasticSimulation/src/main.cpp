@@ -13,7 +13,7 @@ int main() {
     auto alpha_A = 500.0;
     auto alphaR = 0.01;
     auto alpha_R = 50.0;
-    auto betaA = 5.0;
+    auto betaA = 50.0;
     auto betaR = 5.0;
     auto gammaA = 1.0;
     auto gammaR = 1.0;
@@ -56,18 +56,9 @@ int main() {
 
     std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
 
-    Simulator simulator(system, 1, 30);
+    Simulator simulator(system, 100, 24);
     simulator.RunSimulation(speciesToMonitor);
-
-    auto averageSignals = simulator.GetAverageSignals();
-
-    // Print average signals over time
-    for (size_t i = 0; i < averageSignals.size(); ++i) {
-        std::cout << "Average signal at time step " << i << ": ";
-        std::cout << "C = " << averageSignals[0] << ", ";
-        std::cout << "A = " << averageSignals[1] << ", ";
-        std::cout << "R = " << averageSignals[2] << '\n';
-    }
+    simulator.WriteToCsv("test.csv", speciesToMonitor);
 
     return 0;
 }
