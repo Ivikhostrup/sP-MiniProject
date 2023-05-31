@@ -8,7 +8,8 @@
 #include "SpeciesQuantityMonitor.h"
 
 void Simulator::RunSimulation(const std::vector<std::string>& speciesToMonitor) {
-    m_signals.resize(speciesToMonitor.size());
+    std::vector<std::vector<double>> runningTotals(speciesToMonitor.size());
+    std::vector<std::vector<double>> counts(speciesToMonitor.size());
 
     for (int i = 0; i < m_numTrajectories; ++i) {
         m_system.Reset(); // Reset system to initial state
@@ -26,13 +27,33 @@ void Simulator::RunSimulation(const std::vector<std::string>& speciesToMonitor) 
 
         for (size_t j = 0; j < signals.size(); ++j) {
             if (i == 0) {
-                // Initialize m_signals with the signals from the first trajectory
-                m_signals[j] = signals[j];
+                // Initialize running totals with the value of the signals from the first trajectory and count by 1
+                runningTotals[j] = signals[j];
+                counts[j] = std::vector<double>(signals[j].size(), 1);
+            } else {
+                // Update running totals and counts
+                for (size_t k = 0; k < signals[j].size(); ++k) {
+                    runningTotals[j][k] += signals[j][k];
+                    counts[j][k] += 1;
+                }
             }
         }
-
-        //PrintSignals(speciesToMonitor);
     }
+
+    // Resize the outer vector to match the number of species we're monitoring
+    m_signals.resize(runningTotals.size());
+
+    // Calculate the average signal for each trajectory
+    for (size_t j = 0; j < runningTotals.size(); ++j) {
+        // Resize the inner vector to match the number of time points for which we have data
+        m_signals[j].resize(runningTotals[j].size());
+
+        for (size_t k = 0; k < runningTotals[j].size(); ++k) {
+            m_signals[j][k] = runningTotals[j][k] / counts[j][k];
+        }
+    }
+
+
 }
 
 std::vector<std::vector<double>> Simulator::GetAverageSignals() const {

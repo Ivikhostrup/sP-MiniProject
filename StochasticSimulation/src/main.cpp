@@ -56,7 +56,7 @@ int main() {
 
     std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
 
-    Simulator simulator(system, 100, 24);
+    Simulator simulator(system, 100, 100);
     simulator.RunSimulation(speciesToMonitor);
     simulator.WriteToCsv("test.csv", speciesToMonitor);
 
