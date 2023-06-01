@@ -5,8 +5,8 @@
 
 #include <fstream>
 #include "CircadianSimulator.h"
-#include "SpeciesQuantityMonitorCallBack.h"
-#include "CsvWriter.h"
+#include "../monitors/SpeciesQuantityMonitorCallBack.h"
+#include "../reporting/CsvWriter.h"
 
 
 

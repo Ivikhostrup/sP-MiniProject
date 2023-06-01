@@ -8,8 +8,8 @@
 
 #include <vector>
 #include "Monitor.h"
-#include "Species.h"
-#include "ChemicalSystem.h"
+#include "../reactions/Species.h"
+#include "../reactions/ChemicalSystem.h"
 #include "MonitorCallBack.h"
 
 class SpeciesQuantityMonitorCallBack : public MonitorCallBack {

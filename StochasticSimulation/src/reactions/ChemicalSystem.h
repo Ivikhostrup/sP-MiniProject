@@ -8,8 +8,8 @@
 #include <chrono>
 #include <vector>
 #include "Reaction.h"
-#include "SymbolTable.h"
-#include "Monitor.h"
+#include "../symbolTable/SymbolTable.h"
+#include "../monitors/Monitor.h"
 
 class ChemicalSystem {
 public:
