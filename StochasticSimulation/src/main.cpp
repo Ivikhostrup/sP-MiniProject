@@ -9,11 +9,11 @@
 
 int main() {
 
-    std::vector<std::string> speciesToMonitor = {"A", "B", "C"};
+    std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor<SpeciesQuantityMonitorCallBack> monitor(speciesMonitorCallBack);
 
-    SimpleSimulator simulator(2000);
+    CircadianSimulator simulator(1, 24);
     simulator.RunSimulation(monitor);
 
     return 0;

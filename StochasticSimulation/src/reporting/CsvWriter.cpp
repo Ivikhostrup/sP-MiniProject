@@ -9,7 +9,7 @@
 void CsvWriter::WriteToCsv(const std::vector<std::vector<double>>& signals) const {
     std::ofstream file;
 
-    file.open(m_filename);
+    file.open( m_filename);
     if (file.fail()) {
         std::cerr << "Failed to open file: " << m_filename << "\n";
         return;
