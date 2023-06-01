@@ -3,12 +3,17 @@
 //
 
 #include <fstream>
+#include <iostream>
 #include "CsvWriter.h"
 
 void CsvWriter::WriteToCsv(const std::vector<std::vector<double>>& signals) const {
     std::ofstream file;
 
     file.open(m_filename);
+    if (file.fail()) {
+        std::cerr << "Failed to open file: " << m_filename << "\n";
+        return;
+    }
     // Write species names as header
     for (const auto& name : m_species_names) {
         file << name;
@@ -19,15 +24,18 @@ void CsvWriter::WriteToCsv(const std::vector<std::vector<double>>& signals) cons
     file << '\n';
 
     // Write signals
-    for (size_t t = 0; t < m_species_names[0].size(); ++t) {
-        for (size_t j = 0; j < m_species_names.size(); ++j) {
-            file << m_species_names[j][t];
-            if (j < m_species_names.size() - 1) { // Check if not the last element to avoid trailing comma
+    for (size_t t = 0; t < signals[0].size(); ++t) {
+        for (size_t j = 0; j < signals.size(); ++j) {
+            file << signals[j][t];
+            if (j < signals.size() - 1) { // Check if not the last element to avoid trailing comma
                 file << ',';
             }
         }
         file << '\n';
     }
 
+    if (file.bad()) {
+        std::cerr << "Failed to write to file: " << m_filename << "\n";
+    }
     file.close();
 }

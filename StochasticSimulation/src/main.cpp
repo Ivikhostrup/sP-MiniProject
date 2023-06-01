@@ -5,14 +5,15 @@
 #include "reactions/ChemicalSystem.h"
 #include "monitors/SpeciesQuantityMonitorCallBack.h"
 #include "simulators/CircadianSimulator.h"
+#include "simulators/SimpleSimulator.h"
 
 int main() {
 
-    std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
+    std::vector<std::string> speciesToMonitor = {"A", "B", "C"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor<SpeciesQuantityMonitorCallBack> monitor(speciesMonitorCallBack);
 
-    CircadianSimulator simulator(100, 100);
+    SimpleSimulator simulator(2000);
     simulator.RunSimulation(monitor);
 
     return 0;
