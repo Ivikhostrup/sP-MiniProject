@@ -16,8 +16,8 @@ public:
 
     void WriteToCsv(const std::vector<std::vector<double>>& signals) const;
 private:
-    const std::string& m_filename;
-    const std::vector<std::string>& m_species_names;
+    const std::string m_filename;
+    const std::vector<std::string> m_species_names;
 };
 
 

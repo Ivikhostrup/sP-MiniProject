@@ -16,11 +16,11 @@ public:
     ChemicalSystem() : m_gen(m_rd()) {};
 
     template <typename CallBackType>
-    void Simulate(size_t endTime, Monitor<CallBackType>& monitor) {
+    void Simulate(size_t endTime, Monitor<CallBackType>& monitor, bool recordDataPerHour = true) {
         double startTime = 0.0;
-        double nextRecordHour = 0.0;
+        double nextRecordedHour = 0.0;
 
-        while (startTime < endTime){
+        while (startTime <= endTime){
             ComputeDelay();
 
             auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
@@ -33,7 +33,7 @@ public:
             }
 
             startTime += reaction_with_min_delay->get_delay();
-
+            std::cout << startTime << std::endl;
             auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
 
             bool reactantsSufficient = true;
@@ -54,9 +54,13 @@ public:
                 }
             }
 
-            if (startTime >= nextRecordHour) {
-                monitor.OnStateChange(nextRecordHour, *this);  // Record data at the hour mark
-                nextRecordHour += 1;  // Schedule next recording at the next hour
+            if(!recordDataPerHour) {
+                monitor.OnStateChange(startTime, *this);
+            }
+
+            if (startTime >= nextRecordedHour) {
+                monitor.OnStateChange(nextRecordedHour, *this);  // Record data at the hour mark
+                nextRecordedHour += 0.1;  // Schedule next recording at the next hour
             };
         }
     }

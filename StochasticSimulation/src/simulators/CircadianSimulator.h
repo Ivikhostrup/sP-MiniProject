@@ -71,7 +71,7 @@ public:
             system.Reset(); // Reset system to initial state
 
             std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-            system.Simulate(m_endTime, monitor); // Run simulation
+            system.Simulate(m_endTime, monitor, true); // Run simulation
             std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
             std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
 

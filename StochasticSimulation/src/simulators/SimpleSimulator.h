@@ -20,12 +20,12 @@ public:
 
         auto A = system.AddSpecies("A", 100);
         auto B = system.AddSpecies("B", 0);
-        auto C = system.AddSpecies("C", 0);
+        auto C = system.AddSpecies("C", 1);
 
         system.AddReaction(A + C >>= B + C, 0.001);
 
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
-        system.Simulate(m_endTime, monitor);
+        system.Simulate(m_endTime, monitor, false);
 
         const auto &signals = monitor.GetCallback().GetSignals();
 
@@ -34,7 +34,7 @@ public:
         }
 
         CsvWriter writer("simpleSimulator1.csv", speciesToMonitor);
-        writer.WriteToCsv(signals);
+        writer.WriteToCsv(m_signals);
     }
 
 

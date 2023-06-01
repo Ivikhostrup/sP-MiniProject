@@ -29,7 +29,7 @@ void Reaction::SetRateConstant(const double& rate_constant){
 }
 
 std::ostream& operator<<(std::ostream& os, const Reaction& reaction) {
-    //reaction.print_reaction(os);
+    reaction.print_reaction(os);
     return os;
 }
 
