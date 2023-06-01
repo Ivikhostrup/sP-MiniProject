@@ -13,7 +13,7 @@
 
 class ChemicalSystem {
 public:
-    ChemicalSystem() : m_gen(m_rd()) {};
+    ChemicalSystem() : m_gen(std::chrono::system_clock::now().time_since_epoch().count()) {};
 
     template <typename CallBackType>
     void Simulate(size_t endTime, Monitor<CallBackType>& monitor, bool recordDataPerHour = true) {
@@ -81,7 +81,7 @@ private:
     SymbolTable<Reaction> m_symbolTable_reactions;
     std::unordered_map<std::string, size_t> m_initial_quantities;
     std::random_device m_rd;
-    std::mt19937 m_gen;
+    std::default_random_engine m_gen;
 };
 
 

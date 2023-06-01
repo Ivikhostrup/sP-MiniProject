@@ -11,22 +11,20 @@
 #include "Species.h"
 #include "ChemicalSystem.h"
 #include "MonitorCallBack.h"
-#include "DataRecord.h"
 
 class SpeciesQuantityMonitorCallBack : public MonitorCallBack {
 public:
-    SpeciesQuantityMonitorCallBack(const std::vector<std::string>& speciesName)
+    explicit SpeciesQuantityMonitorCallBack(const std::vector<std::string>& speciesName)
         : m_species_names(speciesName), m_signals_monitor(speciesName.size()) {}
 
         void operator()(double time, const ChemicalSystem& chemicalSystem) override;
-        const std::vector<DataRecord>& GetRecords() const;
+
 
         const std::vector<std::vector<double>>& GetSignals() const;
         const std::vector<std::string>& GetMonitoredSpecies() const;
 private:
     std::vector<std::string> m_species_names;
     std::vector<std::vector<double>> m_signals_monitor;
-    std::vector<DataRecord> m_records;
 };
 
 

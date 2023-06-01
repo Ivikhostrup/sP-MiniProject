@@ -15,7 +15,7 @@ public:
     SimpleSimulator(size_t endTime) : m_endTime(endTime) {}
 
     template<typename CallBackType>
-    void RunSimulation(Monitor<CallBackType>& monitor) const {
+    void RunFirstSimulation(Monitor<CallBackType>& monitor) {
         ChemicalSystem system;
 
         auto A = system.AddSpecies("A", 100);
@@ -27,28 +27,61 @@ public:
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor, false);
 
-        auto records = monitor.GetCallback().GetRecords();
+        auto signals = monitor.GetCallback().GetSignals();
 
-        std::vector<std::string> headers = {"Time"};
-        for(const auto& species : monitor.GetCallback().GetMonitoredSpecies()) {
-            headers.push_back(species);
+        for (const auto& signal : signals) {
+            m_signals.push_back(signal);
         }
 
-        CsvWriter writer("simpleSimulator1.csv", headers);
-
-        for (const auto& record : records) {
-            std::vector<double> row;
-            row.push_back(record.timestamp);
-
-            for (size_t i = 0; i < monitor.GetCallback().GetMonitoredSpecies().size(); ++i) {
-                const auto& species = monitor.GetCallback().GetMonitoredSpecies()[i];
-                row.push_back(record.quantities.at(i));
-            }
-
-            writer.WriteRow(row);
-        }
+        CsvWriter writer("firstSimpleSimulator.csv", speciesToMonitor);
+        writer.WriteToCsv(m_signals);
     }
 
+    template<typename CallBackType>
+    void RunSecondSimulation(Monitor<CallBackType>& monitor) {
+        ChemicalSystem system;
+
+        auto A = system.AddSpecies("A", 100);
+        auto B = system.AddSpecies("B", 0);
+        auto C = system.AddSpecies("C", 2);
+
+        system.AddReaction(A + C >>= B + C, 0.001);
+
+        std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
+        system.Simulate(m_endTime, monitor, false);
+
+        auto signals = monitor.GetCallback().GetSignals();
+
+        for (const auto& signal : signals) {
+            m_signals.push_back(signal);
+        }
+
+        CsvWriter writer("secondSimpleSimulator.csv", speciesToMonitor);
+        writer.WriteToCsv(signals);
+    }
+
+    template<typename CallBackType>
+    void RunThirdSimulation(Monitor<CallBackType>& monitor) {
+        ChemicalSystem system;
+
+        auto A = system.AddSpecies("A", 50);
+        auto B = system.AddSpecies("B", 50);
+        auto C = system.AddSpecies("C", 1);
+
+        system.AddReaction(A + C >>= B + C, 0.001);
+
+        std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
+        system.Simulate(m_endTime, monitor, false);
+
+        auto signals = monitor.GetCallback().GetSignals();
+
+        for (const auto& signal : signals) {
+            m_signals.push_back(signal);
+        }
+
+        CsvWriter writer("thirdSimpleSimulator1.csv", speciesToMonitor);
+        writer.WriteToCsv(signals);
+    }
 
 private:
     size_t m_endTime;

@@ -43,13 +43,13 @@ void Reaction::print_reaction(std::ostream &os) const {
     // Print reactants
     os << "Reactants" << std::endl;
     for (const auto& reactant : this->get_reactants().GetCombinedSpecies()) {
-        os << *reactant << "\n";
+        os << "Reactant quantitiy: "<< reactant->GetQuantity() << "\n";
     }
 
     // Print products
     os << "Products" << std::endl;
     for (const auto& product : this->get_products().GetCombinedSpecies()) {
-        os << *product << "\n";
+        os << "Product quantitiy: "<< product->GetQuantity() << "\n";
     }
 }
 
@@ -61,12 +61,13 @@ double Reaction::get_delay() const {
     return m_delay;
 }
 
-void Reaction::ComputeDelay(std::mt19937& gen) {
+void Reaction::ComputeDelay(std::default_random_engine& gen) {
     auto lambda = static_cast<double>(m_lambda);
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
         lambda *= static_cast<double>(reactant->GetQuantity());
     }
+
 
     std::exponential_distribution distribution(lambda);
 

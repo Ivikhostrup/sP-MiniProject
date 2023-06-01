@@ -1,11 +1,11 @@
 #include <iostream>
-#include "reactions/Species.h"
-#include "reactions/CombinedElements.h"
-#include "reactions/Reaction.h"
-#include "reactions/ChemicalSystem.h"
-#include "monitors/SpeciesQuantityMonitorCallBack.h"
-#include "simulators/CircadianSimulator.h"
-#include "simulators/SimpleSimulator.h"
+#include "Species.h"
+#include "CombinedElements.h"
+#include "Reaction.h"
+#include "ChemicalSystem.h"
+#include "SpeciesQuantityMonitorCallBack.h"
+#include "CircadianSimulator.h"
+#include "SimpleSimulator.h"
 
 int main() {
 
@@ -13,8 +13,9 @@ int main() {
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor<SpeciesQuantityMonitorCallBack> monitor(speciesMonitorCallBack);
 
-    SimpleSimulator simulator(2000);
-    simulator.RunSimulation(monitor);
+
+    SimpleSimulator simulator(100000);
+    simulator.RunFirstSimulation(monitor);
 
     return 0;
 }

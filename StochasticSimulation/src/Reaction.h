@@ -22,7 +22,7 @@ public:
     [[nodiscard]] double GetLambda() const;
     void set_delay(const double& delay);
     [[nodiscard]] double get_delay() const;
-    void ComputeDelay(std::mt19937& gen);
+    void ComputeDelay(std::default_random_engine& gen);
 
 
     [[nodiscard]] const CombinedElements& get_reactants() const;
@@ -34,7 +34,7 @@ private:
     CombinedElements m_reactants;
     CombinedElements m_products;
     double m_lambda;
-    double m_delay;
+    double m_delay = std::numeric_limits<double>::max();
     void print_reaction(std::ostream& os) const;
 };
 
