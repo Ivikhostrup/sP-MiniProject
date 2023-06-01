@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <chrono>
 #include "ChemicalSystem.h"
-#include "../monitors/Monitor.h"
+#include "Monitor.h"
 
 
 std::shared_ptr<Species> ChemicalSystem::AddSpecies(const std::string& name, const size_t& initial_amount) {

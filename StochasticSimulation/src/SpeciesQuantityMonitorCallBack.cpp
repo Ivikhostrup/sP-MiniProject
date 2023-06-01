@@ -6,9 +6,14 @@
 
 
 void SpeciesQuantityMonitorCallBack::operator()(double time, const ChemicalSystem &chemicalSystem) {
-    for(size_t i = 0; i < m_species_names.size(); ++i) {
-        m_signals_monitor[i].push_back(chemicalSystem.GetSpecies(m_species_names[i])->GetQuantity());
+    std::vector<double> quantities;
+    quantities.reserve(m_species_names.size());
+
+    for (const auto& name : m_species_names) {
+        quantities.push_back(static_cast<double>(chemicalSystem.GetSpecies(name)->GetQuantity()));
     }
+
+    m_records.emplace_back(time, quantities);
 }
 
 const std::vector<std::string> &SpeciesQuantityMonitorCallBack::GetMonitoredSpecies() const {
@@ -17,6 +22,10 @@ const std::vector<std::string> &SpeciesQuantityMonitorCallBack::GetMonitoredSpec
 
 const std::vector<std::vector<double>> &SpeciesQuantityMonitorCallBack::GetSignals() const {
     return m_signals_monitor;
+}
+
+const std::vector<DataRecord> &SpeciesQuantityMonitorCallBack::GetRecords() const {
+    return m_records;
 }
 
 

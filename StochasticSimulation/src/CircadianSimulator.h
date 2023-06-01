@@ -6,8 +6,8 @@
 #define STOCHASTICSIMULATION_CIRCADIANSIMULATOR_H
 
 
-#include "../reactions/ChemicalSystem.h"
-#include "../reporting/CsvWriter.h"
+#include "ChemicalSystem.h"
+#include "CsvWriter.h"
 
 class CircadianSimulator {
 public:
@@ -106,8 +106,8 @@ public:
             }
         }
 
-        CsvWriter writer("test.csv", speciesToMonitor);
-        writer.WriteToCsv(m_signals);
+        //CsvWriter writer("test.csv", speciesToMonitor);
+        //writer.WriteToCsv(m_signals);
     }
 
     std::vector<std::vector<double>> GetAverageSignals() const;

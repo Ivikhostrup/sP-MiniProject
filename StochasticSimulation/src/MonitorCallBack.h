@@ -2,7 +2,7 @@
 // Created by Ivik Hostrup on 6/1/2023.
 //
 
-#include "../reactions/ChemicalSystem.h"
+#include "ChemicalSystem.h"
 
 #ifndef STOCHASTICSIMULATION_MONITORCALLBACK_H
 #define STOCHASTICSIMULATION_MONITORCALLBACK_H

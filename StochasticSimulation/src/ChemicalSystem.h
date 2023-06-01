@@ -8,8 +8,8 @@
 #include <chrono>
 #include <vector>
 #include "Reaction.h"
-#include "../symbolTable/SymbolTable.h"
-#include "../monitors/Monitor.h"
+#include "SymbolTable.h"
+#include "Monitor.h"
 
 class ChemicalSystem {
 public:
@@ -59,7 +59,7 @@ public:
             }
 
             if (startTime >= nextRecordedHour) {
-                monitor.OnStateChange(nextRecordedHour, *this);  // Record data at the hour mark
+                monitor.OnStateChange(nextRecordedHour, *this);  // DataRecord data at the hour mark
                 nextRecordedHour += 0.1;  // Schedule next recording at the next hour
             };
         }
