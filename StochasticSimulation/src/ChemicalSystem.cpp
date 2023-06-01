@@ -9,51 +9,6 @@
 #include "Monitor.h"
 
 
-void ChemicalSystem::Simulate(size_t endTime, Monitor& monitor) {
-    double startTime = 0.0;
-    double nextRecordHour = 0.0;
-
-    while (startTime < endTime){
-        ComputeDelay();
-
-        auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
-        auto reaction_with_min_delay = reaction_map.begin()->second;
-
-        for (const auto& [_, reaction] : reaction_map) {
-            if (reaction->get_delay() < reaction_with_min_delay->get_delay()) {
-                reaction_with_min_delay = reaction;
-            }
-        }
-
-        startTime += reaction_with_min_delay->get_delay();
-
-        auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
-
-        bool reactantsSufficient = true;
-        for (const auto& reactant : combinedSpecies) {
-            if(reactant->GetQuantity() < 1) { // If amount agents is less than 1, then the reaction cannot proceed
-                reactantsSufficient = false;
-                break;
-            }
-        }
-
-        if(reactantsSufficient) {
-            for (const auto& reactant : combinedSpecies) {
-                reactant->SetQuantity(reactant->GetQuantity() - 1);
-            }
-
-            for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
-                product->SetQuantity(product->GetQuantity() + 1);
-            }
-        }
-
-        if (startTime >= nextRecordHour) {
-            monitor.OnStateChange(nextRecordHour, *this);  // Record data at the hour mark
-            nextRecordHour += 1;  // Schedule next recording at the next hour
-        };
-    }
-}
-
 std::shared_ptr<Species> ChemicalSystem::AddSpecies(const std::string& name, const size_t& initial_amount) {
     auto new_species = std::make_shared<Species>(name, initial_amount);
     m_symbolTable_species.AddSymbol(name, new_species);

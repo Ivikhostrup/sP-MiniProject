@@ -6,13 +6,25 @@
 #define STOCHASTICSIMULATION_MONITOR_H
 
 
+#include <utility>
 
 //forward declaration
 class ChemicalSystem;
 
+template<typename CallBackType>
 class Monitor {
 public:
-    virtual void OnStateChange(double time, const ChemicalSystem& chemicalSystem) = 0;
+    explicit Monitor(CallBackType callback) : m_callback(std::move(callback)) {}
+
+    void OnStateChange(double time, const ChemicalSystem& chemicalSystem) {
+        m_callback(time, chemicalSystem);
+    }
+
+    const CallBackType& GetCallback() const {
+        return m_callback;
+    }
+private:
+    CallBackType m_callback;
 };
 
 

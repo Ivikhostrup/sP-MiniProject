@@ -5,7 +5,7 @@
 #ifndef STOCHASTICSIMULATION_CHEMICALSYSTEM_H
 #define STOCHASTICSIMULATION_CHEMICALSYSTEM_H
 
-
+#include <chrono>
 #include <vector>
 #include "Reaction.h"
 #include "SymbolTable.h"
@@ -15,7 +15,51 @@ class ChemicalSystem {
 public:
     ChemicalSystem() : m_gen(m_rd()) {};
 
-    void Simulate(size_t endTime, Monitor& monitor);
+    template <typename CallBackType>
+    void Simulate(size_t endTime, Monitor<CallBackType>& monitor) {
+        double startTime = 0.0;
+        double nextRecordHour = 0.0;
+
+        while (startTime < endTime){
+            ComputeDelay();
+
+            auto reaction_map = m_symbolTable_reactions.GetAllSymbols();
+            auto reaction_with_min_delay = reaction_map.begin()->second;
+
+            for (const auto& [_, reaction] : reaction_map) {
+                if (reaction->get_delay() < reaction_with_min_delay->get_delay()) {
+                    reaction_with_min_delay = reaction;
+                }
+            }
+
+            startTime += reaction_with_min_delay->get_delay();
+
+            auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
+
+            bool reactantsSufficient = true;
+            for (const auto& reactant : combinedSpecies) {
+                if(reactant->GetQuantity() < 1) { // If amount agents is less than 1, then the reaction cannot proceed
+                    reactantsSufficient = false;
+                    break;
+                }
+            }
+
+            if(reactantsSufficient) {
+                for (const auto& reactant : combinedSpecies) {
+                    reactant->SetQuantity(reactant->GetQuantity() - 1);
+                }
+
+                for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
+                    product->SetQuantity(product->GetQuantity() + 1);
+                }
+            }
+
+            if (startTime >= nextRecordHour) {
+                monitor.OnStateChange(nextRecordHour, *this);  // Record data at the hour mark
+                nextRecordHour += 1;  // Schedule next recording at the next hour
+            };
+        }
+    }
     void ComputeDelay();
     void Reset();
 

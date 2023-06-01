@@ -3,8 +3,8 @@
 #include "CombinedElements.h"
 #include "Reaction.h"
 #include "ChemicalSystem.h"
-#include "SpeciesQuantityMonitor.h"
-#include "Simulator.h"
+#include "SpeciesQuantityMonitorCallBack.h"
+#include "CircadianSimulator.h"
 
 int main() {
     ChemicalSystem system;
@@ -55,10 +55,11 @@ int main() {
 
 
     std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
+    SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
+    Monitor<SpeciesQuantityMonitorCallBack> monitor(speciesMonitorCallBack);
 
-    Simulator simulator(system, 100, 100);
-    simulator.RunSimulation(speciesToMonitor);
-    simulator.WriteToCsv("test.csv", speciesToMonitor);
+    CircadianSimulator simulator(system, 100, 100);
+    simulator.RunSimulation(monitor);
 
     return 0;
 }

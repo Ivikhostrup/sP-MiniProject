@@ -1,29 +1,13 @@
 //
-// Created by Ivik Hostrup on 5/30/2023.
+// Created by Ivik Hostrup on 6/1/2023.
 //
 
 #ifndef STOCHASTICSIMULATION_SIMULATOR_H
 #define STOCHASTICSIMULATION_SIMULATOR_H
 
-
-#include "ChemicalSystem.h"
+#endif //STOCHASTICSIMULATION_SIMULATOR_H
 
 class Simulator {
 public:
-    Simulator(ChemicalSystem& system, int numTrajectories, size_t endTime)
-        : m_system(system), m_numTrajectories(numTrajectories), m_endTime(endTime) {}
-
-    void RunSimulation(const std::vector<std::string>& speciesToMonitor);
-    std::vector<std::vector<double>> GetAverageSignals() const;
-    void WriteToCsv(const std::string& filename, const std::vector<std::string>& speciesNames) const;
-
-
-private:
-    ChemicalSystem& m_system;
-    int m_numTrajectories;
-    size_t m_endTime;
-    std::vector<std::vector<double>> m_signals;
+    virtual void RunSimulation() = 0;
 };
-
-
-#endif //STOCHASTICSIMULATION_SIMULATOR_H
