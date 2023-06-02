@@ -9,6 +9,7 @@
 #include "Monitor.h"
 #include "ChemicalSystem.h"
 #include "CsvWriter.h"
+#include "plot.hpp"
 
 class SimpleSimulator {
 public:
@@ -28,13 +29,24 @@ public:
         system.Simulate(m_endTime, monitor, false);
 
         auto signals = monitor.GetCallback().GetSignals();
+        auto time = monitor.GetCallback().GetTimepoints();
 
-        for (const auto& signal : signals) {
-            m_signals.push_back(signal);
+        // Create map for species and their quantities
+        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+
+        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
+            speciesQuantities[speciesToMonitor[i]] = signals[i];
         }
 
-        CsvWriter writer("firstSimpleSimulator.csv", speciesToMonitor);
-        writer.WriteToCsv(m_signals);
+        // Create plot instance
+        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
+
+        // Add data to plot
+        plot.plot_data(time, speciesQuantities);
+
+        // Show the plot
+        plot.process();
+        plot.save_to_png("SimpleSimulation.png");
     }
 
     template<typename CallBackType>
@@ -51,13 +63,24 @@ public:
         system.Simulate(m_endTime, monitor, false);
 
         auto signals = monitor.GetCallback().GetSignals();
+        auto time = monitor.GetCallback().GetTimepoints();
 
-        for (const auto& signal : signals) {
-            m_signals.push_back(signal);
+        // Create map for species and their quantities
+        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+
+        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
+            speciesQuantities[speciesToMonitor[i]] = signals[i];
         }
 
-        CsvWriter writer("secondSimpleSimulator.csv", speciesToMonitor);
-        writer.WriteToCsv(signals);
+        // Create plot instance
+        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
+
+        // Add data to plot
+        plot.plot_data(time, speciesQuantities);
+
+        // Show the plot
+        plot.process();
+        plot.save_to_png("SimpleSimulation.png");
     }
 
     template<typename CallBackType>
@@ -74,13 +97,24 @@ public:
         system.Simulate(m_endTime, monitor, false);
 
         auto signals = monitor.GetCallback().GetSignals();
+        auto time = monitor.GetCallback().GetTimepoints();
 
-        for (const auto& signal : signals) {
-            m_signals.push_back(signal);
+        // Create map for species and their quantities
+        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+
+        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
+            speciesQuantities[speciesToMonitor[i]] = signals[i];
         }
 
-        CsvWriter writer("thirdSimpleSimulator1.csv", speciesToMonitor);
-        writer.WriteToCsv(signals);
+        // Create plot instance
+        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
+
+        // Add data to plot
+        plot.plot_data(time, speciesQuantities);
+
+        // Show the plot
+        plot.process();
+        plot.save_to_png("SimpleSimulation.png");
     }
 
 private:

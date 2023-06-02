@@ -64,6 +64,7 @@ public:
             };
         }
     }
+
     void ComputeDelay();
     void Reset();
 

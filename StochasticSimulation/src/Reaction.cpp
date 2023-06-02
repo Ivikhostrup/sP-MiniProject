@@ -62,12 +62,11 @@ double Reaction::get_delay() const {
 }
 
 void Reaction::ComputeDelay(std::default_random_engine& gen) {
-    auto lambda = static_cast<double>(m_lambda);
+    auto lambda = m_lambda;
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){
         lambda *= static_cast<double>(reactant->GetQuantity());
     }
-
 
     std::exponential_distribution distribution(lambda);
 

@@ -7,6 +7,7 @@
 
 
 #include "ChemicalSystem.h"
+#include "plot.hpp"
 
 
 class CircadianSimulator {
@@ -106,8 +107,25 @@ public:
             }
         }
 
-        //CsvWriter writer("test.csv", speciesToMonitor);
-        //writer.WriteToCsv(m_signals);
+        // Create map for species and their quantities
+        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+
+        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
+            speciesQuantities[speciesToMonitor[i]] = m_signals[i];
+        }
+
+        // Create plot instance
+        Plot plot("Circadian Simulation", "Time", "Quantity", 800, 600);
+
+        // Get timepoints from the monitor
+        auto time = monitor.GetCallback().GetTimepoints();
+
+        // Add data to plot
+        plot.plot_data(time, speciesQuantities);
+
+        // Show the plot
+        plot.process();
+        plot.save_to_png("CircadianSimulation.png");
     }
 
     std::vector<std::vector<double>> GetAverageSignals() const;
