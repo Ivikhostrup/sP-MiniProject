@@ -38,6 +38,11 @@ const std::unordered_map<std::string, std::shared_ptr<T>>& SymbolTable<T>::GetAl
 
 template<typename T>
 void SymbolTable<T>::AddSymbol(const std::string &name, const std::shared_ptr<T> &object) {
+    // Add check to see if symbol already exists
+    if(m_symbol_table.find(name) != m_symbol_table.end())
+        throw std::runtime_error("Symbol already exists");
+    
+
     m_symbol_table[name] = object;
 }
 

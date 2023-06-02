@@ -40,16 +40,21 @@ std::string Reaction::to_string() const {
 }
 
 void Reaction::print_reaction(std::ostream &os) const {
-    // Print reactants
-    os << "Reactants" << std::endl;
+    size_t count = 0;
     for (const auto& reactant : this->get_reactants().GetCombinedSpecies()) {
-        os << "Reactant quantitiy: "<< reactant->GetQuantity() << "\n";
+        os << *reactant;
+        if(++count < this->get_reactants().GetCombinedSpecies().size()){
+            os << " + ";
+        }
     }
+    os << " -> ";
 
-    // Print products
-    os << "Products" << std::endl;
+    count = 0;
     for (const auto& product : this->get_products().GetCombinedSpecies()) {
-        os << "Product quantitiy: "<< product->GetQuantity() << "\n";
+        os << *product;
+        if(++count < this->get_products().GetCombinedSpecies().size()){
+            os << " + ";
+        }
     }
 }
 
@@ -61,7 +66,7 @@ double Reaction::get_delay() const {
     return m_delay;
 }
 
-void Reaction::ComputeDelay(std::default_random_engine& gen) {
+void Reaction::ComputeDelay(std::mt19937& gen) {
     auto lambda = m_lambda;
 
     for(const auto& reactant : m_reactants.GetCombinedSpecies()){

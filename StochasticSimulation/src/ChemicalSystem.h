@@ -13,7 +13,7 @@
 
 class ChemicalSystem {
 public:
-    ChemicalSystem() : m_gen(std::chrono::system_clock::now().time_since_epoch().count()) {};
+    ChemicalSystem() : m_gen(m_rd()) {};
 
     template <typename CallBackType>
     void Simulate(size_t endTime, Monitor<CallBackType>& monitor, bool recordDataPerHour = true) {
@@ -33,7 +33,7 @@ public:
             }
 
             startTime += reaction_with_min_delay->get_delay();
-            std::cout << startTime << std::endl;
+            //std::cout << startTime << std::endl;
             auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
 
             bool reactantsSufficient = true;
@@ -60,7 +60,7 @@ public:
 
             if (startTime >= nextRecordedHour) {
                 monitor.OnStateChange(nextRecordedHour, *this);  // DataRecord data at the hour mark
-                nextRecordedHour += 0.1;  // Schedule next recording at the next hour
+                nextRecordedHour += 1;  // Schedule next recording at the next hour
             };
         }
     }
@@ -82,7 +82,7 @@ private:
     SymbolTable<Reaction> m_symbolTable_reactions;
     std::unordered_map<std::string, size_t> m_initial_quantities;
     std::random_device m_rd;
-    std::default_random_engine m_gen;
+    std::mt19937 m_gen;
 };
 
 

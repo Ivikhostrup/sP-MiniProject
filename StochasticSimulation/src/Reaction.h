@@ -22,7 +22,7 @@ public:
     [[nodiscard]] double GetLambda() const;
     void set_delay(const double& delay);
     [[nodiscard]] double get_delay() const;
-    void ComputeDelay(std::default_random_engine& gen);
+    void ComputeDelay(std::mt19937& gen);
 
 
     [[nodiscard]] const CombinedElements& get_reactants() const;

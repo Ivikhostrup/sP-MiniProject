@@ -20,7 +20,7 @@ public:
         m_callback(time, chemicalSystem);
     }
 
-    const CallBackType& GetCallback() const {
+    CallBackType& GetCallback() {
         return m_callback;
     }
 private:
