@@ -35,8 +35,8 @@ void plotCovid(){
 int main() {
 
     //PlotSimple();
-    PlotCircadian();
-    //plotCovid();
+    //PlotCircadian();
+    plotCovid();
 
     return 0;
 }

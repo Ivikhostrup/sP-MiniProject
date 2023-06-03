@@ -3,6 +3,7 @@
 //
 
 #include "SpeciesQuantityMonitorCallBack.h"
+#include "plot.hpp"
 
 
 void SpeciesQuantityMonitorCallBack::operator()(double time, const ChemicalSystem &chemicalSystem) {
@@ -22,6 +23,35 @@ const std::vector<std::vector<double>>& SpeciesQuantityMonitorCallBack::GetSigna
 
 const std::vector<double>& SpeciesQuantityMonitorCallBack::GetTimepoints() const {
     return m_timepoints;
+}
+
+void SpeciesQuantityMonitorCallBack::CreatePlot(const std::string &plotName,
+                                                const std::string &xAxisLabel,
+                                                const std::string &yAxisLabel,
+                                                int width, int height) const {
+
+    // Create map for species and their quantities
+    std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+
+    for(size_t i = 0; i < m_species_names.size(); ++i) {
+        std::vector<double> signals = m_signals_monitor[i];
+        if(m_species_names[i] == "H") {
+            for(size_t j = 0; j < signals.size(); ++j) {
+                signals[j] *= 1000;
+            }
+        }
+        speciesQuantities[m_species_names[i]] = signals;
+    }
+
+    // Create plot instance
+    Plot plot(plotName, xAxisLabel, yAxisLabel, width, height);
+
+    // Add data to plot
+    plot.plot_data(m_timepoints, speciesQuantities);
+
+    // Show the plot
+    plot.process();
+    plot.save_to_png("CovidSimulation.png");
 }
 
 

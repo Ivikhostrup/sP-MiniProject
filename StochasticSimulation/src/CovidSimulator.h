@@ -46,34 +46,7 @@ public:
 
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor);
-
-        auto signals = monitor.GetCallback().GetSignals();
-        auto time = monitor.GetCallback().GetTimepoints();
-
-        // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
-        auto monitoredSpecies = monitor.GetCallback().GetMonitoredSpecies();
-
-        for(size_t i = 0; i < monitoredSpecies.size(); ++i) {
-            if(monitoredSpecies[i] == "H") {
-                for(size_t j = 0; j < signals[i].size(); ++j) {
-                    signals[i][j] *= 1000;
-                }
-            }
-            speciesQuantities[monitoredSpecies[i]] = signals[i];
-        }
-
-
-        // Create plot instance
-        Plot plot("Covid Simulation", "Time", "Quantity", 800, 600);
-
-        // Add data to plot
-        plot.plot_data(time, speciesQuantities);
-
-        // Show the plot
-        plot.process();
-        plot.save_to_png("CovidSimulation.png");
-
+        monitor.GetCallback().CreatePlot();
     };
 private:
     size_t m_N;

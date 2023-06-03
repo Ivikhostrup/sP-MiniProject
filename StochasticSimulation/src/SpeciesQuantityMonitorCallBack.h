@@ -23,6 +23,10 @@ public:
         const std::vector<std::vector<double>>& GetSignals() const;
         const std::vector<std::string>& GetMonitoredSpecies() const;
         const std::vector<double>& GetTimepoints() const;
+    void CreatePlot(const std::string& plotName = "Covid Simulation",
+                    const std::string& xAxisLabel = "Time",
+                    const std::string& yAxisLabel = "Quantity",
+                    int width = 800, int height = 600) const;
 private:
     std::vector<std::string> m_species_names;
     std::vector<std::vector<double>> m_signals_monitor;

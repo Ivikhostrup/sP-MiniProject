@@ -66,30 +66,10 @@ public:
 
         system.Simulate(m_endTime, monitor); // Run simulation
 
-        auto signals = monitor.GetCallback().GetSignals();
-        auto time = monitor.GetCallback().GetTimepoints();
-
-        // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
-        auto monitoredSpecies = monitor.GetCallback().GetMonitoredSpecies();
-
-        for(size_t i = 0; i < monitoredSpecies.size(); ++i) {
-            speciesQuantities[monitoredSpecies[i]] = signals[i];
-        }
-
-        // Create plot instance
-        Plot plot("Circadian Simulation", "Time", "Quantity", 800, 600);
-
-        // Add data to plot
-        plot.plot_data(time, speciesQuantities);
-
-        // Show the plot
-        plot.process();
-        plot.save_to_png("CircadianSimulation.png");
+        monitor.GetCallback().CreatePlot();
     }
 
 private:
-    int m_numTrajectories;
     size_t m_endTime;
     std::vector<std::vector<double>> m_signals;
 };

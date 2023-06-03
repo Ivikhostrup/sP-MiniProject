@@ -28,25 +28,7 @@ public:
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor);
 
-        auto signals = monitor.GetCallback().GetSignals();
-        auto time = monitor.GetCallback().GetTimepoints();
-
-        // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
-
-        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
-            speciesQuantities[speciesToMonitor[i]] = signals[i];
-        }
-
-        // Create plot instance
-        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
-
-        // Add data to plot
-        plot.plot_data(time, speciesQuantities);
-
-        // Show the plot
-        plot.process();
-        plot.save_to_png("SimpleSimulation.png");
+        monitor.GetCallback().CreatePlot();
     }
 
     template<typename CallBackType>
@@ -62,25 +44,7 @@ public:
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor, false);
 
-        auto signals = monitor.GetCallback().GetSignals();
-        auto time = monitor.GetCallback().GetTimepoints();
-
-        // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
-
-        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
-            speciesQuantities[speciesToMonitor[i]] = signals[i];
-        }
-
-        // Create plot instance
-        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
-
-        // Add data to plot
-        plot.plot_data(time, speciesQuantities);
-
-        // Show the plot
-        plot.process();
-        plot.save_to_png("SimpleSimulation.png");
+        monitor.GetCallback().CreatePlot();
     }
 
     template<typename CallBackType>
@@ -96,25 +60,7 @@ public:
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor, false);
 
-        auto signals = monitor.GetCallback().GetSignals();
-        auto time = monitor.GetCallback().GetTimepoints();
-
-        // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
-
-        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
-            speciesQuantities[speciesToMonitor[i]] = signals[i];
-        }
-
-        // Create plot instance
-        Plot plot("Simple Simulation", "Time", "Quantity", 800, 600);
-
-        // Add data to plot
-        plot.plot_data(time, speciesQuantities);
-
-        // Show the plot
-        plot.process();
-        plot.save_to_png("SimpleSimulation.png");
+        monitor.GetCallback().CreatePlot();
     }
 
 private:
