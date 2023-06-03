@@ -22,11 +22,13 @@ std::shared_ptr<Species> ChemicalSystem::GetSpecies(const std::string& name) con
 }
 
 
-void ChemicalSystem::AddReaction(const Reaction &reaction, const double& rate_constant) {
+std::shared_ptr<Reaction> ChemicalSystem::AddReaction(const Reaction &reaction, const double& rate_constant) {
     auto new_reaction = std::make_shared<Reaction>(reaction);
     new_reaction->SetRateConstant(rate_constant);
     auto reaction_name = new_reaction->to_string();
     m_symbolTable_reactions.AddSymbol(reaction_name, new_reaction);
+
+    return new_reaction;
 }
 
 std::vector<std::shared_ptr<Reaction>> ChemicalSystem::get_reactions() const {

@@ -16,9 +16,8 @@ public:
     ChemicalSystem() : m_gen(m_rd()) {};
 
     template <typename CallBackType>
-    void Simulate(size_t endTime, Monitor<CallBackType>& monitor, bool recordDataPerHour = true) {
+    void Simulate(size_t endTime, Monitor<CallBackType>& monitor) {
         double startTime = 0.0;
-        double nextRecordedHour = 0.0;
 
         while (startTime <= endTime){
             ComputeDelay();
@@ -54,14 +53,7 @@ public:
                 }
             }
 
-            if(!recordDataPerHour) {
-                monitor.OnStateChange(startTime, *this);
-            }
-
-            if (startTime >= nextRecordedHour) {
-                monitor.OnStateChange(nextRecordedHour, *this);  // DataRecord data at the hour mark
-                nextRecordedHour += 1;  // Schedule next recording at the next hour
-            };
+            monitor.OnStateChange(startTime, *this);
         }
     }
 
@@ -70,7 +62,7 @@ public:
 
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     std::shared_ptr<Species> GetSpecies(const std::string& name) const;
-    void AddReaction(const Reaction& reaction, const double& rate_constant);
+    std::shared_ptr<Reaction> AddReaction(const Reaction& reaction, const double& rate_constant);
     [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
     std::vector<std::shared_ptr<Species>> get_species() const;
 

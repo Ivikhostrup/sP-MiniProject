@@ -19,7 +19,7 @@ void PlotCircadian(){
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor monitor(speciesMonitorCallBack);
 
-    CircadianSimulator simulator(5, 24);
+    CircadianSimulator simulator(100);
     simulator.RunSimulation(monitor);
 };
 

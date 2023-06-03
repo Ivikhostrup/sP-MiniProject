@@ -26,7 +26,7 @@ public:
         system.AddReaction(A + C >>= B + C, 0.001);
 
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
-        system.Simulate(m_endTime, monitor, false);
+        system.Simulate(m_endTime, monitor);
 
         auto signals = monitor.GetCallback().GetSignals();
         auto time = monitor.GetCallback().GetTimepoints();

@@ -12,8 +12,7 @@
 
 class CircadianSimulator {
 public:
-    CircadianSimulator(int numTrajectories, size_t endTime)
-        : m_numTrajectories(numTrajectories), m_endTime(endTime) {}
+    CircadianSimulator(size_t endTime) : m_endTime(endTime) {}
 
     template<typename CallBackType>
     void RunSimulation(Monitor<CallBackType>& monitor) {
@@ -63,89 +62,32 @@ public:
         system.AddReaction(MA >>= env, deltaMA);
         system.AddReaction(MR >>= env, deltaMR);
 
-
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
-        std::vector<std::vector<double>> runningTotals(speciesToMonitor.size());
-        std::vector<std::vector<double>> counts(speciesToMonitor.size());
 
-        for (int i = 0; i < m_numTrajectories; ++i) {
-            system.Reset(); // Reset system to initial state
+        system.Simulate(m_endTime, monitor); // Run simulation
 
-            std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-            system.Simulate(m_endTime, monitor, true); // Run simulation
-            std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-            std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << "[ms]" << std::endl;
-
-            // Save signals at each time point
-            const auto &signals = monitor.GetCallback().GetSignals();
-
-            if (i == 0) {
-                // Initialize running totals and counts with the same structure as signals
-                runningTotals = std::vector<std::vector<double>>(signals.size());
-                counts = std::vector<std::vector<double>>(signals.size());
-            }
-
-            for (size_t j = 0; j < signals.size(); ++j) {
-                try {
-                    if (i == 0) {
-                        // Initialize running totals and counts for the first trajectory
-                        runningTotals.at(j) = std::vector<double>(signals.at(j).size(), 0);
-                        counts.at(j) = std::vector<double>(signals.at(j).size(), 0);
-                    } else if (signals.at(j).size() > runningTotals.at(j).size()) {
-                        // If signals[j] for the current trajectory has more elements than runningTotals[j] and counts[j],
-                        // extend the size of runningTotals[j] and counts[j] to match that of signals[j].
-                        runningTotals.at(j).resize(signals.at(j).size(), 0);
-                        counts.at(j).resize(signals.at(j).size(), 0);
-                    }
-
-                    // Update running totals and counts
-                    for (size_t k = 0; k < signals.at(j).size(); ++k) {
-                        runningTotals.at(j).at(k) += signals.at(j).at(k);
-                        counts.at(j).at(k) += 1;
-                    }
-                } catch (const std::out_of_range& e) {
-                    std::cerr << "Out of Range error: " << e.what() << '\n';
-                }
-            }
-
-            //print out running totals with species
-
-
-            //monitor.GetCallback().Reset();
-        }
+        auto signals = monitor.GetCallback().GetSignals();
+        auto time = monitor.GetCallback().GetTimepoints();
 
         // Create map for species and their quantities
-        std::unordered_map<std::string, std::vector<double>> quantetiesOfSpecies;
+        std::unordered_map<std::string, std::vector<double>> speciesQuantities;
+        auto monitoredSpecies = monitor.GetCallback().GetMonitoredSpecies();
 
-        // Now calculate the averages for each species and store them in quantetiesOfSpecies
-        for(size_t i = 0; i < speciesToMonitor.size(); ++i) {
-            std::vector<double> averageSignals(runningTotals.at(i).size());
-
-            for (size_t j = 0; j < runningTotals.at(i).size(); ++j) {
-                averageSignals.at(j) = runningTotals.at(i).at(j) / counts.at(i).at(j);
-            }
-            quantetiesOfSpecies[speciesToMonitor.at(i)] = averageSignals;
+        for(size_t i = 0; i < monitoredSpecies.size(); ++i) {
+            speciesQuantities[monitoredSpecies[i]] = signals[i];
         }
-
 
         // Create plot instance
         Plot plot("Circadian Simulation", "Time", "Quantity", 800, 600);
 
-        // Get timepoints from the monitor
-        auto time = monitor.GetCallback().GetTimepoints();
-
         // Add data to plot
-        plot.plot_data(time, quantetiesOfSpecies);
+        plot.plot_data(time, speciesQuantities);
 
         // Show the plot
         plot.process();
         plot.save_to_png("CircadianSimulation.png");
     }
-
-    std::vector<std::vector<double>> GetAverageSignals() const;
-
-
-
+    
 private:
     int m_numTrajectories;
     size_t m_endTime;

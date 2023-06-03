@@ -12,15 +12,15 @@ void SpeciesQuantityMonitorCallBack::operator()(double time, const ChemicalSyste
     }
 }
 
-const std::vector<std::string> &SpeciesQuantityMonitorCallBack::GetMonitoredSpecies() const {
+const std::vector<std::string>& SpeciesQuantityMonitorCallBack::GetMonitoredSpecies() const {
     return m_species_names;
 }
 
-const std::vector<std::vector<double>> &SpeciesQuantityMonitorCallBack::GetSignals() const {
+const std::vector<std::vector<double>>& SpeciesQuantityMonitorCallBack::GetSignals() const {
     return m_signals_monitor;
 }
 
-const std::vector<double> &SpeciesQuantityMonitorCallBack::GetTimepoints() const {
+const std::vector<double>& SpeciesQuantityMonitorCallBack::GetTimepoints() const {
     return m_timepoints;
 }
 

@@ -11,7 +11,7 @@ const std::string& Species::GetName() const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Species& species) {
-    os << species.GetName() << ":" << species.GetQuantity() << " ";
+    os << species.GetName();
     return os;
 }
 
