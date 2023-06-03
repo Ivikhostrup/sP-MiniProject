@@ -87,7 +87,7 @@ public:
         plot.process();
         plot.save_to_png("CircadianSimulation.png");
     }
-    
+
 private:
     int m_numTrajectories;
     size_t m_endTime;

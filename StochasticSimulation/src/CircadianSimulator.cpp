@@ -3,17 +3,6 @@
 //
 
 
-#include <fstream>
-#include "CircadianSimulator.h"
-#include "SpeciesQuantityMonitorCallBack.h"
-#include "CsvWriter.h"
-
-
-
-std::vector<std::vector<double>> CircadianSimulator::GetAverageSignals() const {
-    return m_signals;
-}
-
 
 
 

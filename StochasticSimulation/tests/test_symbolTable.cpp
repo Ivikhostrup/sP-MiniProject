@@ -15,6 +15,13 @@ TEST_CASE("Testing SymbolTable class") {
         CHECK(table.GetSymbol("S")->GetQuantity() == 10);
     }
 
+    SUBCASE("Testing AddSymbol with existing symbol") {
+        SymbolTable<Species> table;
+        table.AddSymbol("S", S);
+
+        CHECK_THROWS_AS(table.AddSymbol("S", S), std::runtime_error);
+    }
+
     SUBCASE("Testing GetAllSymbols") {
         SymbolTable<Species> table;
         table.AddSymbol("S", S);
