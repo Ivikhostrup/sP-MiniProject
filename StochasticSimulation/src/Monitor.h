@@ -14,7 +14,7 @@ class ChemicalSystem;
 template<typename CallBackType>
 class Monitor {
 public:
-    explicit Monitor(CallBackType callback) : m_callback(std::move(callback)) {}
+    explicit Monitor(CallBackType& callback) : m_callback(callback) {}
 
     void OnStateChange(double time, const ChemicalSystem& chemicalSystem) {
         m_callback(time, chemicalSystem);
@@ -24,7 +24,7 @@ public:
         return m_callback;
     }
 private:
-    CallBackType m_callback;
+    CallBackType& m_callback;
 };
 
 

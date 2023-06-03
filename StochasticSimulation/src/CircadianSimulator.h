@@ -62,11 +62,7 @@ public:
         system.AddReaction(MA >>= env, deltaMA);
         system.AddReaction(MR >>= env, deltaMR);
 
-        std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
-
         system.Simulate(m_endTime, monitor); // Run simulation
-
-        monitor.GetCallback().CreatePlot();
     }
 
 private:

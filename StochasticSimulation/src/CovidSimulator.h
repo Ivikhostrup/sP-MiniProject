@@ -44,9 +44,7 @@ public:
         system.AddReaction(I >>= H, kappa);
         system.AddReaction(H >>= R, tau);
 
-        std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor);
-        monitor.GetCallback().CreatePlot();
     };
 private:
     size_t m_N;

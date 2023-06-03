@@ -2,15 +2,20 @@
 // Created by Ivik Hostrup on 5/29/2023.
 //
 
+#include <algorithm>
 #include "SpeciesQuantityMonitorCallBack.h"
 #include "plot.hpp"
 
 
 void SpeciesQuantityMonitorCallBack::operator()(double time, const ChemicalSystem &chemicalSystem) {
+    std::scoped_lock lock(m_mutex);
+
     m_timepoints.push_back(time);
     for(size_t i = 0; i < m_species_names.size(); ++i) {
         m_signals_monitor[i].push_back(chemicalSystem.GetSpecies(m_species_names[i])->GetQuantity());
     }
+
+    // Mutex unlocks when going out of scope
 }
 
 const std::vector<std::string>& SpeciesQuantityMonitorCallBack::GetMonitoredSpecies() const {
@@ -53,6 +58,20 @@ void SpeciesQuantityMonitorCallBack::CreatePlot(const std::string &plotName,
     plot.process();
     plot.save_to_png("CovidSimulation.png");
 }
+
+double SpeciesQuantityMonitorCallBack::GetPeak(const std::string& speciesName) const {
+
+    auto it = std::find(m_species_names.begin(), m_species_names.end(), speciesName);
+
+    if(it != m_species_names.end()) {
+        size_t index = std::distance(m_species_names.begin(), it);
+
+        return *std::max_element(m_signals_monitor[index].begin(), m_signals_monitor[index].end());
+    } else {
+        throw std::invalid_argument("Species name not found");
+    }
+}
+
 
 
 
