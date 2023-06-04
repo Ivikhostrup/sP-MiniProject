@@ -8,7 +8,6 @@ Benchmarking has also been done to test the performance of using different threa
 The project uses C++17, and the compiler is g++ contained within Msys2/mingw64.
 The compilation options can be seen in my Cmake file seen in section \ref{subsec:rootCmake}.
 
-
 \section{Presenting the results}
 Within this section my results will be presented.
 \subsection{Pretty printing}
@@ -61,17 +60,69 @@ Below are the results.
     A + C -> B + C
 \end{verbatim}
 
-\subsection{}
-North Jutland:
-Peak hospitalized: 2
-Mean hospitalized: 0.673805
+\subsection{Simulation results}
+\subsubsection{Simple reaction}
+Figure \ref{fig:Simple Simulation} shows a simulation of a simple reaction using a reaction rate lambda of $0.001$ and the reaction rule:
+\begin{verbatim}
+    A + C -> B + C
+\end{verbatim}
 
-Denmark:
-Peak hospitalized: 1222
-Mean hospitalized: 729.595
+With the intial amounts of $A$ being $100$, $B$ being $0$ and $C$ being $1$.
 
-Multithreaded:
-Mean peak hospitalized number: 4.05
+\begin{figure}[h!]
+	\includegraphics[scale=0.6]{images/Simple Simulation.png}
+	\centering
+	\caption{Simple Simulation}
+	\label{fig:Simple Simulation}
+\end{figure}
+
+As can be seen from the simulation the catalyst affects the reaction linearly such that the amounts of reactant $A$ and the product $B$ uniformly decrease and increase respectively.
+
+\subsubsection{Covid 19 simulation north Jutland}
+Figure \ref{fig:NorthJutland} illustrates the the simulation of the spread of covid 19 in north Jutland over a 100 day period.
+The amounts of hospitalized have been scaled by $1000$, such that they are more visible on the graph.
+
+\begin{figure}[h!]
+	\includegraphics[scale=0.6]{images/Covid-19 - North Jutland.png}
+	\centering
+	\caption{Covid 19 Simulation - North Jutland}
+	\label{fig:NorthJutland}
+\end{figure}
+
+The amounts of hospitalized during the $100$ day period can be seen to increase in spikes and likewise decrease in spikes, eventually fading off after 52 days. 
+This result seems in line with the infectiousness of covid, causing bursts of outbreaks as it is spread between people, which in turn causes spikes of hospitalizations.
+The results also seem to be in line with the effects of herd immunity after a while. As would be expected when people are infected they build up immunity, and over time, the virus has no ability to spread.
+
+The implementation calculating the peak hospitalizations and mean hospitalizations can be seen in section \ref{subsec:QuantityCallBack}. Using this the results show that the peak hospitalizations are $2$ and an average $0.673805$ adjusting back down from the scaling.
+
+Similarly, figure \ref{fig:Denmark} shows a similar trend as the previous example, but with a more gradual curve of hospitalizations, which seems in line with the amount of people that this simulation included.
+
+\begin{figure}[h!]
+	\includegraphics[scale=0.6]{images/Covid-19 - Denmark.csv.png}
+	\centering
+	\caption{Covid 19 Simulation - Denmark}
+	\label{fig:Denmark}
+\end{figure}
+
+Here the peak hospitalized were $1222$ and the average was $729.595$, also adjusting back down from the scaling.
+
+
+\subsection{Benchmark results}
+In order to test the benefit of multithreading, a bencmark was conducted where 20 simulations were run, 10 times for each benchmark in order to get a fitting average. 
+The benchmarks were done using Google Benchmarks.
+Each benchmark used different amounts of threads to see which performed better. 
+The setup can be seen in section \ref{subsec:benchmarksmul}.
+
+\begin{figure}[h!]
+	\includegraphics[scale=0.6]{images/BenchmarkResults.png}
+	\centering
+	\caption{Benchmarks}
+	\label{fig:Benchmarks}
+\end{figure}
+
+As the benchmarks clearly illustrate that the use of a single thread beats all others. Even when aligning the amounts of threads, with the threads available on the cpu.  
+This could be due to several factors, such as the overhead from context switching, threads trying to access and modify different variables on the same cache line or thread creation overhead.
+
 
 \newpage
 \subsection{src}
@@ -118,7 +169,7 @@ Mean peak hospitalized number: 4.05
 \lstinputlisting[style=colorC++,caption={src/SymbolTable.h}]{../../StochasticSimulation/src/SymbolTable.h}
 \newpage
 \subsection{benchmarks}
-\subsubsection{benchmarks/benchmark\_multithreaded\_covid.cpp}
+\subsubsection{benchmarks/benchmark\_multithreaded\_covid.cpp} \label{subsec:benchmarksmul}
 \lstinputlisting[style=colorC++,caption={benchmarks/benchmark\_multithreaded\_covid.cpp}]{../../StochasticSimulation/benchmarks/benchmark\_multithreaded\_covid.cpp}
 \newpage
 \subsection{src}
@@ -146,7 +197,7 @@ Mean peak hospitalized number: 4.05
 \subsubsection{src/Species.cpp}
 \lstinputlisting[style=colorC++,caption={src/Species.cpp}]{../../StochasticSimulation/src/Species.cpp}
 \newpage
-\subsubsection{src/SpeciesQuantityMonitorCallBack.cpp}
+\subsubsection{src/SpeciesQuantityMonitorCallBack.cpp} \label{subsec:QuantityCallBack}
 \lstinputlisting[style=colorC++,caption={src/SpeciesQuantityMonitorCallBack.cpp}]{../../StochasticSimulation/src/SpeciesQuantityMonitorCallBack.cpp}
 \newpage
 \subsection{tests}
