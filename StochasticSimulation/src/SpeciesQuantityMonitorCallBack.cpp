@@ -50,14 +50,18 @@ void SpeciesQuantityMonitorCallBack::CreatePlot(const std::string &plotName,
     plot.save_to_png(plotName + ".png");
 }
 
-double SpeciesQuantityMonitorCallBack::GetPeak(const std::string& speciesName) const {
+std::pair<double, double> SpeciesQuantityMonitorCallBack::GetPeakAndMean(const std::string& speciesName) const {
 
     auto it = std::find(m_species_names.begin(), m_species_names.end(), speciesName);
 
     if(it != m_species_names.end()) {
         size_t index = std::distance(m_species_names.begin(), it);
 
-        return *std::max_element(m_signals_monitor[index].begin(), m_signals_monitor[index].end());
+        auto peak = *std::max_element(m_signals_monitor[index].begin(), m_signals_monitor[index].end());
+        auto sum = std::accumulate(m_signals_monitor[index].begin(), m_signals_monitor[index].end(), 0.0);
+        auto mean = sum / m_signals_monitor[index].size();
+
+        return std::make_pair(peak, mean);
     } else {
         throw std::invalid_argument("Species name not found");
     }

@@ -29,21 +29,26 @@ void PlotCircadian(){
     monitor.GetCallback().CreatePlot("Circadian Simulation");
 };
 
-void PlotCovid(double N = 10000){
+void PlotCovid(double N = 10000, const std::string& title = "Covid Simulation"){
     std::vector<std::string> speciesToMonitor = {"S", "E", "I","H","R"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor monitor(speciesMonitorCallBack);
 
     CovidSimulator simulator(N, 100);
     simulator.RunCovidSimulator(monitor);
-    monitor.GetCallback().CreatePlot("Covid Simulation");
+
+    auto [peak, mean] = speciesMonitorCallBack.GetPeakAndMean("H");
+
+    std::cout << "Peak hospitalized: " << peak << std::endl;
+    std::cout << "Mean hospitalized: " << mean << std::endl;
+
+    monitor.GetCallback().CreatePlot(title);
 };
 
 void MultithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thread::hardware_concurrency()){
     std::vector<std::string> speciesToMonitor = {"S", "E", "I","H","R"};
 
-
-    std::vector<std::future<double>> futures(numSimulations);
+    std::vector<std::future<std::pair<double, double>>> futures(numSimulations);
 
     for(size_t i = 0; i < numSimulations; ++i) {
         futures[i] = std::async(std::launch::async, [&speciesToMonitor] {
@@ -56,15 +61,17 @@ void MultithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thr
             simulator.RunCovidSimulator(monitor);
 
             // Compute and return the peak hospitalized number
-            return speciesMonitorCallBack.GetPeak("H");
+            return speciesMonitorCallBack.GetPeakAndMean("H");
         });
     }
 
     std::vector<double> peakValues(numSimulations);
     for (size_t i = 0; i < numSimulations; ++i) {
-        peakValues[i] = futures[i].get();
+        auto [peaks, _] = futures[i].get();
+        peakValues[i] = peaks;
     }
 
-    double mean = std::accumulate(peakValues.begin(), peakValues.end(), 0.0) / numSimulations;
-    std::cout << "Mean peak hospitalized number: " << mean << std::endl;
+    double meanPeakAcrossSimulations = std::accumulate(peakValues.begin(), peakValues.end(), 0.0) / numSimulations;
+
+    std::cout << "Mean peak hospitalized number: " << meanPeakAcrossSimulations << std::endl;
 }

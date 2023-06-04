@@ -6,7 +6,7 @@
 
 int main() {
 
-    PlotSimple();
+    //PlotSimple();
     //PlotCircadian();
     //PlotCovid();
     //MultithreadedCovid();

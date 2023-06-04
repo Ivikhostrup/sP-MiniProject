@@ -27,7 +27,7 @@ public:
                         const std::string& xAxisLabel = "Time",
                         const std::string& yAxisLabel = "Quantity",
                         int width = 800, int height = 600) const;
-        double GetPeak(const std::string& speciesName) const;
+        std::pair<double, double> GetPeakAndMean(const std::string& speciesName) const;
 private:
     std::vector<std::string> m_species_names;
     std::vector<std::vector<double>> m_signals_monitor;
