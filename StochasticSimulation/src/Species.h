@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
+// Species class for representing a species in a chemical reaction
+// Baseline to satisfy all requirements.
 //
 
 #ifndef STOCHASTICSIMULATION_SPECIES_H
@@ -16,10 +18,7 @@ public:
 
     const std::string& GetName() const;
     const size_t& GetQuantity() const;
-    // set m_quantity
     void SetQuantity(const size_t& quantity);
-
-
 
     friend std::ostream& operator<<(std::ostream& os, const Species& species);
 private:

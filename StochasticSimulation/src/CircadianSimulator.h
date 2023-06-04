@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/30/2023.
+// Created by Ivik Hostrup.
+// Circadian simulator class that simulates the circadian rhythm of a cell
+// Subtask A.1
 //
 
 #ifndef STOCHASTICSIMULATION_CIRCADIANSIMULATOR_H

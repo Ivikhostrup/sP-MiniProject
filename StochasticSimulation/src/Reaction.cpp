@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
 //
 
 #include "Reaction.h"
@@ -58,11 +58,7 @@ void Reaction::print_reaction(std::ostream &os) const {
     }
 }
 
-void Reaction::set_delay(const double& delay) {
-    m_delay = delay;
-}
-
-double Reaction::get_delay() const {
+double Reaction::GetDelay() const {
     return m_delay;
 }
 
@@ -78,10 +74,6 @@ void Reaction::ComputeDelay(std::mt19937& gen) {
     m_delay = distribution(gen);
 }
 
-double Reaction::GetLambda() const {
-    return m_lambda;
-}
-
 // Multiple reactants and single products
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product){
     Reaction reaction;
@@ -94,7 +86,7 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const std::share
         reaction.AddProduct(product);
     }
 
-    return reaction;
+    return std::move(reaction);
 }
 
 // single reactactant and multiple products
@@ -109,7 +101,7 @@ Reaction operator>>=(const std::shared_ptr<Species>& reactant, const CombinedEle
         }
     }
 
-    return reaction;
+    return std::move(reaction);
 }
 
 // Multiple reactants and multiple products
@@ -126,7 +118,7 @@ Reaction operator>>=(const CombinedElements& combinedReactants, const CombinedEl
         }
     }
 
-    return reaction;
+    return std::move(reaction);
 }
 
 // single reactactant and a single product
@@ -138,5 +130,5 @@ Reaction operator>>=(const std::shared_ptr<Species>& reactant, const std::shared
         reaction.AddProduct(product);
     }
 
-    return reaction;
+    return std::move(reaction);
 }

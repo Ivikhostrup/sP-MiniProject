@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 6/1/2023.
+// Created by Ivik Hostrup.
+// CSV writer class that can be used to write the results of a simulation to a csv file
+// Early implementation to satisfy requirement 6.
 //
 
 #ifndef STOCHASTICSIMULATION_CSVWRITER_H

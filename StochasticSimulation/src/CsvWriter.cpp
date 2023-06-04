@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 6/1/2023.
+// Created by Ivik Hostrup.
 //
 
 #include <fstream>

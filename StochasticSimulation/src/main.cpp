@@ -1,15 +1,15 @@
 
 
 
-#include "simulation_methods.h"
+#include "SimulationMethods.h"
 #include <benchmark/benchmark.h>
 
 int main() {
 
-    //plotSimple();
-    //plotCircadian();
-    //plotCovid();
-    multithreadedCovid();
+    PlotSimple();
+    //PlotCircadian();
+    //PlotCovid();
+    //MultithreadedCovid();
 
     return 0;
 }

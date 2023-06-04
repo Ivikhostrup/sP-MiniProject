@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 6/2/2023.
+// Taken from class lectures
 //
 
 #include "plot.hpp"

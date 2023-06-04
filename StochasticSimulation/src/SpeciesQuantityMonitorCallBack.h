@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/29/2023.
+// Created by Ivik Hostrup.
+// Specific monitor class that can be used to monitor the quantity of a species in a chemical system
+// Part of requirement 7.
 //
 
 #ifndef STOCHASTICSIMULATION_SPECIESQUANTITYMONITORCALLBACK_H
@@ -20,15 +22,12 @@ public:
 
         void operator()(double time, const ChemicalSystem& chemicalSystem) override;
 
-
-        const std::vector<std::vector<double>>& GetSignals() const;
         const std::vector<std::string>& GetMonitoredSpecies() const;
-        const std::vector<double>& GetTimepoints() const;
-    void CreatePlot(const std::string& plotName = "Covid Simulation",
-                    const std::string& xAxisLabel = "Time",
-                    const std::string& yAxisLabel = "Quantity",
-                    int width = 800, int height = 600) const;
-    double GetPeak(const std::string& speciesName) const;
+        void CreatePlot(const std::string& plotName = "Covid Simulation",
+                        const std::string& xAxisLabel = "Time",
+                        const std::string& yAxisLabel = "Quantity",
+                        int width = 800, int height = 600) const;
+        double GetPeak(const std::string& speciesName) const;
 private:
     std::vector<std::string> m_species_names;
     std::vector<std::vector<double>> m_signals_monitor;

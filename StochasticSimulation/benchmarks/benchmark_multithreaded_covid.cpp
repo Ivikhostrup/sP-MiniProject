@@ -2,11 +2,11 @@
 // Created by Ivik Hostrup on 6/3/2023.
 //
 #include <benchmark/benchmark.h>
-#include "../src/simulation_methods.h"
+#include "../src/SimulationMethods.h"
 
 static void BM_multithreadedCovid(benchmark::State& state) {
     for (auto _ : state) {
-        multithreadedCovid(state.range(0));
+        MultithreadedCovid(state.range(0));
     }
 }
 

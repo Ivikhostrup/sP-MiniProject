@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
+// Combined elements are used to represent the reactants and products of a reaction.
+// Baseline to satisfy all requirements.
 //
 
 #ifndef STOCHASTICSIMULATION_COMBINEDELEMENTS_H

@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
+// Reaction class is used to represent a chemical reaction.
+// Baseline to satisfy all requirements.
 //
 
 #ifndef STOCHASTICSIMULATION_REACTION_H
@@ -19,9 +21,7 @@ public:
     void AddReactant(const std::shared_ptr<Species>& species);
     void AddProduct(const std::shared_ptr<Species>& species);
     void SetRateConstant(const double& rate_constant);
-    [[nodiscard]] double GetLambda() const;
-    void set_delay(const double& delay);
-    [[nodiscard]] double get_delay() const;
+    [[nodiscard]] double GetDelay() const;
     void ComputeDelay(std::mt19937& gen);
 
 

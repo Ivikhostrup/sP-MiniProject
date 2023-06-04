@@ -1,12 +1,16 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
 //
 
 #include "CombinedElements.h"
 #include <iostream>
 
 void CombinedElements::Add(const std::shared_ptr<Species>& species) {
-    m_combined_species.push_back(species);
+    if(species){
+        m_combined_species.push_back(species);
+    } else {
+        std::cout << "Species is null" << std::endl;
+    }
 }
 
 std::vector<std::shared_ptr<Species>> CombinedElements::GetCombinedSpecies() const{
@@ -23,9 +27,8 @@ std::ostream& operator<<(std::ostream& os, const CombinedElements& combinedReact
 
 CombinedElements operator+(const std::shared_ptr<Species>& leftElement, const std::shared_ptr<Species>& rightElement) {
     CombinedElements combination;
-
     combination.Add(leftElement);
     combination.Add(rightElement);
 
-    return combination;
+    return std::move(combination);
 }

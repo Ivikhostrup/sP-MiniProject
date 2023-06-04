@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 6/1/2023.
+// Created by Ivik Hostrup.
+// Covid simulator class that can be used to simulate the spread of covid-19
+// Subtask A.2
 //
 
 #ifndef STOCHASTICSIMULATION_COVIDSIMULATOR_H

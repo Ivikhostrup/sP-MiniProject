@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/29/2023.
+// Created by Ivik Hostrup.
+// Generic monitor class that can be used to monitor the state of a chemical system
+// Part of requirement 7.
 //
 
 #ifndef STOCHASTICSIMULATION_MONITOR_H

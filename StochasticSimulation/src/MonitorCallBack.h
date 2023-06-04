@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 6/1/2023.
+// Created by Ivik Hostrup.
+// Monitor callback interface
+// Part of requirement 7
 //
 
 #include "ChemicalSystem.h"

@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/28/2023.
+// Created by Ivik Hostrup.
+// Generic symbol table class that can be used to store any type of object
+// Requirement 3.
 //
 
 #ifndef STOCHASTICSIMULATION_SYMBOLTABLE_H

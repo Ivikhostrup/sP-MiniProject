@@ -17,7 +17,7 @@ endif(Qt5_FOUND)
 include_directories(include)
 
 # Create a library from source files
-add_library(stochasticsimulation_lib src/Species.cpp src/Reaction.cpp src/ChemicalSystem.cpp src/CombinedElements.cpp src/Monitor.cpp src/SpeciesQuantityMonitorCallBack.cpp src/CircadianSimulator.cpp src/CsvWriter.cpp src/SimpleSimulator.cpp src/CovidSimulator.cpp src/plot.cpp src/simulation_methods.cpp src/simulation_methods.h)
+add_library(stochasticsimulation_lib src/Species.cpp src/Reaction.cpp src/ChemicalSystem.cpp src/CombinedElements.cpp src/SpeciesQuantityMonitorCallBack.cpp src/CsvWriter.cpp src/plot.cpp src/SimulationMethods.cpp src/SimulationMethods.h)
 
 # Link the library to the required Qt5 components
 if(Qt5_FOUND)

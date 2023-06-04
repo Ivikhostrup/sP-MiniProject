@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 5/29/2023.
+// Created by Ivik Hostrup.
 //
 
 #include <algorithm>
@@ -22,14 +22,6 @@ const std::vector<std::string>& SpeciesQuantityMonitorCallBack::GetMonitoredSpec
     return m_species_names;
 }
 
-const std::vector<std::vector<double>>& SpeciesQuantityMonitorCallBack::GetSignals() const {
-    return m_signals_monitor;
-}
-
-const std::vector<double>& SpeciesQuantityMonitorCallBack::GetTimepoints() const {
-    return m_timepoints;
-}
-
 void SpeciesQuantityMonitorCallBack::CreatePlot(const std::string &plotName,
                                                 const std::string &xAxisLabel,
                                                 const std::string &yAxisLabel,
@@ -48,15 +40,14 @@ void SpeciesQuantityMonitorCallBack::CreatePlot(const std::string &plotName,
         speciesQuantities[m_species_names[i]] = signals;
     }
 
-    // Create plot instance
+
     Plot plot(plotName, xAxisLabel, yAxisLabel, width, height);
 
-    // Add data to plot
     plot.plot_data(m_timepoints, speciesQuantities);
 
-    // Show the plot
     plot.process();
-    plot.save_to_png("CovidSimulation.png");
+
+    plot.save_to_png(plotName + ".png");
 }
 
 double SpeciesQuantityMonitorCallBack::GetPeak(const std::string& speciesName) const {

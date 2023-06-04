@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 6/1/2023.
+// Created by Ivik Hostrup.
+// Simple simulation class that can be used to run a simulation with a simple chemical system.
+// Requirement 4.
 //
 
 #ifndef STOCHASTICSIMULATION_SIMPLESIMULATOR_H
@@ -27,8 +29,6 @@ public:
 
         std::vector<std::string> speciesToMonitor = monitor.GetCallback().GetMonitoredSpecies();
         system.Simulate(m_endTime, monitor);
-
-        monitor.GetCallback().CreatePlot();
     }
 
     template<typename CallBackType>

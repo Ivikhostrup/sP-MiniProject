@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
 //
 
 #include <iostream>
@@ -31,13 +31,13 @@ std::shared_ptr<Reaction> ChemicalSystem::AddReaction(const Reaction &reaction, 
     return new_reaction;
 }
 
-std::vector<std::shared_ptr<Reaction>> ChemicalSystem::get_reactions() const {
+std::vector<std::shared_ptr<Reaction>> ChemicalSystem::GetReactions() const {
     return m_reactions;
 }
 
 // Overload << for reactions in system
 std::ostream& operator<<(std::ostream& os, const ChemicalSystem& system) {
-    for (const auto& reaction : system.get_reactions()) {
+    for (const auto& reaction : system.GetReactions()) {
         os << *reaction << std::endl;
     }
     return os;
@@ -49,10 +49,6 @@ void ChemicalSystem::ComputeDelay() {
     for(const auto& [name, reaction] : reaction_map){
         reaction->ComputeDelay(m_gen);
     }
-}
-
-std::vector<std::shared_ptr<Species>> ChemicalSystem::get_species() const {
-    return m_species;
 }
 
 void ChemicalSystem::Reset() {

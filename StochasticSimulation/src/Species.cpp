@@ -1,5 +1,5 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
 //
 
 #include <stdexcept>

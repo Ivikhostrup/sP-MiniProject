@@ -1,3 +1,7 @@
+// Plotting class to create graphs of the simulation results
+// Taken from class lectures
+// Requirement 6.
+
 #ifndef PLOT_HPP
 #define PLOT_HPP
 

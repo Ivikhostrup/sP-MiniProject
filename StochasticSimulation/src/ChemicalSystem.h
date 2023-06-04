@@ -1,5 +1,7 @@
 //
-// Created by Ivik Hostrup on 5/26/2023.
+// Created by Ivik Hostrup.
+// Chemical system class that represents the stochastic simulation algorithm
+// Requirement 4.
 //
 
 #ifndef STOCHASTICSIMULATION_CHEMICALSYSTEM_H
@@ -26,12 +28,12 @@ public:
             auto reaction_with_min_delay = reaction_map.begin()->second;
 
             for (const auto& [_, reaction] : reaction_map) {
-                if (reaction->get_delay() < reaction_with_min_delay->get_delay()) {
+                if (reaction->GetDelay() < reaction_with_min_delay->GetDelay()) {
                     reaction_with_min_delay = reaction;
                 }
             }
 
-            startTime += reaction_with_min_delay->get_delay();
+            startTime += reaction_with_min_delay->GetDelay();
             //std::cout << startTime << std::endl;
             auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
 
@@ -63,8 +65,8 @@ public:
     std::shared_ptr<Species> AddSpecies(const std::string& name, const size_t& initial_amount);
     std::shared_ptr<Species> GetSpecies(const std::string& name) const;
     std::shared_ptr<Reaction> AddReaction(const Reaction& reaction, const double& rate_constant);
-    [[nodiscard]] std::vector<std::shared_ptr<Reaction>> get_reactions() const;
-    std::vector<std::shared_ptr<Species>> get_species() const;
+    [[nodiscard]] std::vector<std::shared_ptr<Reaction>> GetReactions() const;
+
 
     friend std::ostream& operator<<(std::ostream& os, const ChemicalSystem& system);
 private:

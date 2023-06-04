@@ -1,44 +1,45 @@
+//
+// Created by Ivik Hostrup.
+//
+
+
 #include <future>
 #include "CovidSimulator.h"
 #include "SpeciesQuantityMonitorCallBack.h"
 #include "CircadianSimulator.h"
 #include "SimpleSimulator.h"
 
-//
-// Created by Ivik Hostrup on 6/3/2023.
-//
-
-void plotSimple(){
+void PlotSimple(){
     std::vector<std::string> speciesToMonitor = {"A", "B", "C"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor monitor(speciesMonitorCallBack);
 
     SimpleSimulator simulator(1000);
     simulator.RunFirstSimulation(monitor);
-    monitor.GetCallback().CreatePlot();
+    monitor.GetCallback().CreatePlot("Simple Simulation");
 };
 
-void plotCircadian(){
+void PlotCircadian(){
     std::vector<std::string> speciesToMonitor = {"A", "R", "C"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor monitor(speciesMonitorCallBack);
 
     CircadianSimulator simulator(100);
     simulator.RunSimulation(monitor);
-    monitor.GetCallback().CreatePlot();
+    monitor.GetCallback().CreatePlot("Circadian Simulation");
 };
 
-void plotCovid(double N = 10000){
+void PlotCovid(double N = 10000){
     std::vector<std::string> speciesToMonitor = {"S", "E", "I","H","R"};
     SpeciesQuantityMonitorCallBack speciesMonitorCallBack(speciesToMonitor);
     Monitor monitor(speciesMonitorCallBack);
 
     CovidSimulator simulator(N, 100);
     simulator.RunCovidSimulator(monitor);
-    monitor.GetCallback().CreatePlot();
+    monitor.GetCallback().CreatePlot("Covid Simulation");
 };
 
-void multithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thread::hardware_concurrency()){
+void MultithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thread::hardware_concurrency()){
     std::vector<std::string> speciesToMonitor = {"S", "E", "I","H","R"};
 
 
@@ -65,5 +66,5 @@ void multithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thr
     }
 
     double mean = std::accumulate(peakValues.begin(), peakValues.end(), 0.0) / numSimulations;
-    //std::cout << "Mean peak hospitalized number: " << mean << std::endl;
+    std::cout << "Mean peak hospitalized number: " << mean << std::endl;
 }
