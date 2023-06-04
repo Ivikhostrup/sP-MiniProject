@@ -14,16 +14,16 @@ TEST_CASE("Testing Reaction class") {
 
     auto constructedReaction = system.AddReaction(S+E >>= I, 0.5);
 
-    SUBCASE("Testing AddReactant and get_reactants") {
+    SUBCASE("Testing AddReactant and GetReactants") {
         Reaction reaction;
         reaction.AddReactant(S);
-        CHECK(reaction.get_reactants().GetCombinedSpecies().size() == 1);
+        CHECK(reaction.GetReactants().GetCombinedSpecies().size() == 1);
     }
 
-    SUBCASE("Testing AddProduct and get_products") {
+    SUBCASE("Testing AddProduct and GetProducts") {
         Reaction reaction;
         reaction.AddProduct(E);
-        CHECK(reaction.get_products().GetCombinedSpecies().size() == 1);
+        CHECK(reaction.GetProducts().GetCombinedSpecies().size() == 1);
     }
 
     SUBCASE("Testing reaction pretty print") {

@@ -35,7 +35,7 @@ public:
 
             startTime += reaction_with_min_delay->GetDelay();
             //std::cout << startTime << std::endl;
-            auto combinedSpecies = reaction_with_min_delay->get_reactants().GetCombinedSpecies();
+            auto combinedSpecies = reaction_with_min_delay->GetReactants().GetCombinedSpecies();
 
             bool reactantsSufficient = true;
             for (const auto& reactant : combinedSpecies) {
@@ -50,7 +50,7 @@ public:
                     reactant->SetQuantity(reactant->GetQuantity() - 1);
                 }
 
-                for (const auto& product : reaction_with_min_delay->get_products().GetCombinedSpecies()) {
+                for (const auto& product : reaction_with_min_delay->GetProducts().GetCombinedSpecies()) {
                     product->SetQuantity(product->GetQuantity() + 1);
                 }
             }

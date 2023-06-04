@@ -23,19 +23,18 @@ public:
     void SetRateConstant(const double& rate_constant);
     [[nodiscard]] double GetDelay() const;
     void ComputeDelay(std::mt19937& gen);
-
-
-    [[nodiscard]] const CombinedElements& get_reactants() const;
-    [[nodiscard]] const CombinedElements& get_products() const;
-
+    [[nodiscard]] const CombinedElements& GetReactants() const;
+    [[nodiscard]] const CombinedElements& GetProducts() const;
     std::string to_string() const;
+
     friend std::ostream& operator<<(std::ostream& os, const Reaction& reaction);
 private:
     CombinedElements m_reactants;
     CombinedElements m_products;
     double m_lambda;
     double m_delay = std::numeric_limits<double>::max();
-    void print_reaction(std::ostream& os) const;
+
+    void PrintReaction(std::ostream& os) const;
 };
 
 Reaction operator>>=(const CombinedElements& combinedReactants, const std::shared_ptr<Species>& product);
