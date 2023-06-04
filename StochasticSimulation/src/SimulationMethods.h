@@ -18,7 +18,7 @@
 
 void PlotSimple();
 void PlotCircadian();
-void PlotCovid(double N = 10000);
+void PlotCovid(double N = 10000, const std::string& filename = "covid.csv");
 void MultithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thread::hardware_concurrency());
 
 #endif //STOCHASTICSIMULATION_SIMULATIONMETHODS_H
