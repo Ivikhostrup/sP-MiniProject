@@ -6,10 +6,10 @@
 
 int main() {
 
-    //PlotSimple();
+    PlotSimple();
     //PlotCircadian();
     //PlotCovid(5822763, "Covid-19 - Denmark.csv");
-    MultithreadedCovid();
+    //MultithreadedCovid();
 
     return 0;
 }

@@ -4,11 +4,64 @@ Additionally, the report contains 4 figures of simulations that I have run and p
 Conclusions on these 4 simulations will be given as they are presented.
 Benchmarking has also been done to test the performance of using different threads with the covid 19 multithreading simulation.
 
-\setup{Setup}
+\section{Setup}
 The project uses C++17, and the compiler is g++ contained within Msys2/mingw64.
-The 
+The compilation options can be seen in my Cmake file seen in section \ref{subsec:rootCmake}.
 
 
+\section{Presenting the results}
+Within this section my results will be presented.
+\subsection{Pretty printing}
+When printing out reactions the form will be of $A + B -> C$. This is done through overloading the \textit{operator<<} for the reaction class as can be seen in section \ref{subsec:reaction}.
+
+Below are the results.
+
+\subsubsection{Circadian reactions}
+\begin{verbatim}
+    A + DA -> D_A
+    D_A -> DA + A
+    A + DR -> D_R
+    D_R -> DR + A
+    D_A -> MA + D_A
+    DA -> MA + DA
+    D_R -> MR + D_R
+    DR -> MR + DR
+    MA -> MA + A
+    MR -> MR + R
+    A + R -> C
+    C -> R
+    A -> env
+    R -> env
+    MA -> env
+    MR -> env
+\end{verbatim}
+
+\subsubsection{SEIHR covid 19 reactions}
+\begin{verbatim}
+    A + DA -> D_A
+    D_A -> DA + A
+    A + DR -> D_R
+    D_R -> DR + A
+    D_A -> MA + D_A
+    DA -> MA + DA
+    D_R -> MR + D_R
+    DR -> MR + DR
+    MA -> MA + A
+    MR -> MR + R
+    A + R -> C
+    C -> R
+    A -> env
+    R -> env
+    MA -> env
+    MR -> env
+\end{verbatim}
+
+\subsubsection{Simple reaction}
+\begin{verbatim}
+    A + C -> B + C
+\end{verbatim}
+
+\subsection{}
 North Jutland:
 Peak hospitalized: 2
 Mean hospitalized: 0.673805
@@ -17,6 +70,8 @@ Denmark:
 Peak hospitalized: 1222
 Mean hospitalized: 729.595
 
+Multithreaded:
+Mean peak hospitalized number: 4.05
 
 \newpage
 \subsection{src}
@@ -82,7 +137,7 @@ Mean hospitalized: 729.595
 \subsubsection{src/plot.cpp}
 \lstinputlisting[style=colorC++,caption={src/plot.cpp}]{../../StochasticSimulation/src/plot.cpp}
 \newpage
-\subsubsection{src/Reaction.cpp}
+\subsubsection{src/Reaction.cpp} \label{subsec:reaction}
 \lstinputlisting[style=colorC++,caption={src/Reaction.cpp}]{../../StochasticSimulation/src/Reaction.cpp}
 \newpage
 \subsubsection{src/SimulationMethods.cpp}
