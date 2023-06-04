@@ -1,7 +1,12 @@
-This report shows the overall results of several different reaction simulations, as well as the implementation to run these simulations. 
+This report shows the overall results of several different reaction simulations, as well as the implementation to run these simulations and unit tests for some of the code. 
 The simulations include a simple simulation of a reaction, a simulation of a circadian system, a simulation of the spread of covid 19 without multithreading and one with.
 Additionally, the report contains 4 figures of simulations that I have run and plottet the results for.
+Conclusions on these 4 simulations will be given as they are presented.
+Benchmarking has also been done to test the performance of using different threads with the covid 19 multithreading simulation.
 
+\setup{Setup}
+The project uses C++17, and the compiler is g++ contained within Msys2/mingw64.
+The 
 
 
 North Jutland:
@@ -104,7 +109,7 @@ Mean hospitalized: 729.595
 \lstinputlisting[style=colorBash,caption={benchmarks/CMakeLists.txt}]{../../StochasticSimulation/benchmarks/CMakeLists.txt}
 \newpage
 \subsection{src}
-\subsubsection{CMakeLists.txt}
+\subsubsection{CMakeLists.txt} \label{subsec:rootCmake}
 \lstinputlisting[style=colorBash,caption={CMakeLists.txt}]{../../StochasticSimulation/CMakeLists.txt}
 \newpage
 \subsection{tests}

@@ -73,5 +73,5 @@ void MultithreadedCovid(size_t numSimulations = 20, size_t numThreads = std::thr
 
     double meanPeakAcrossSimulations = std::accumulate(peakValues.begin(), peakValues.end(), 0.0) / numSimulations;
 
-    std::cout << "Mean peak hospitalized number: " << meanPeakAcrossSimulations << std::endl;
+    //std::cout << "Mean peak hospitalized number: " << meanPeakAcrossSimulations << std::endl;
 }
